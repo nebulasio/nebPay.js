@@ -1,0 +1,37 @@
+<!doctype>
+<html>
+
+<head>
+    <script type="text/javascript" src="../dist/nebPay.js"></script>
+    <script type="text/javascript">
+        var NebPay = require("nebpay");
+        var nebPay = new NebPay();
+        function onPayClick() {
+            var to = document.getElementById("to").value;
+            var value = document.getElementById("value").value;
+            nebPay.pay(to, value);
+        }
+    </script>
+    <style>
+        textarea {
+            width: 400px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<h1>Demo</h1>
+<div>Pay Info</div>
+
+<div style="display: inline-block">
+    <div>to:</div>
+    <input type="text" id="to" placeholder="to address"/>
+</div>
+
+<div style="display: inline-block">
+        <div>value:</div>
+        <input type="text" id="value" placeholder="value"/>
+</div>
+<button type="button" onClick="onPayClick();">pay</button>
+</body>
+</html>
