@@ -26,21 +26,36 @@ var createDeaultQRContainer = function() {
 
 	var qrcontainer = document.createElement("div");
 	qrcontainer.className = "qrcode-container";
-	var style = `display: flex; align-items: center; justify-content: center;
-	min-height: 300px; min-width: 300px; padding: 10px;
-	background-color: ghostwhite;`;
+	var style = `text-align: center;
+    background-color: #fff0;
+    border-radius: 20px;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);`;
 	addCssRule(".qrcode-container", style);
 	qrcontainer.appendChild(canvas);
 
 	var background = document.createElement("div");
-	qrcontainer.className = "qrcode-background";
-	style = `with:100%; height:100%;background-color: rgba(0, 0, 0, 0.5);`;
+	background.className = "qrcode-background";
+	style = `position:absolute;
+	left:0;
+	top:0;
+	z-index:100;
+	height:100%;
+	width:100%;
+	background-color: rgba(0, 0, 0, 0.4);`;
 	addCssRule(".qrcode-background", style);
 	background.appendChild(qrcontainer);
+
+	var body = document.getElementsByTagName("body");
+	body[0].appendChild(background);
+
 	background.onclick = function () {
-		window.removeChild(background);
+		body[0].removeChild(background);
 	};
-	window.appendChild(background);
 
 	return canvas;
 };

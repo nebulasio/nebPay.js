@@ -1,6 +1,5 @@
 <!doctype>
 <html>
-
 <head>
     <script type="text/javascript" src="../dist/nebPay.js"></script>
     <script type="text/javascript">
@@ -9,7 +8,11 @@
         function onPayClick() {
             var to = document.getElementById("to").value;
             var value = document.getElementById("value").value;
-            nebPay.pay(to, value);
+            nebPay.pay(to, value, {
+                qrcode: {
+                    showQRCode: true
+                }
+            });
         }
     </script>
     <style>
