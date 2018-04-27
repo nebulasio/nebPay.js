@@ -14,6 +14,7 @@ var Pay = function (appKey, appSecret) {
 Pay.prototype = {
 	submit: function (currency, to, value, payload, options) {
 		options.serialNumber = Utils.randomCode(32);
+		value = value | "0";
 		var amount = new BigNumber(value).times("1000000000000000000");
 		var params = {
 			serialNumber: options.serialNumber,
