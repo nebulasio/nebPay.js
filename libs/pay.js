@@ -1,5 +1,7 @@
 "use strict";
 
+var BigNumber = require("bignumber.js");
+
 var Utils = require("./Utils");
 var QRCode = require("./qrcode");
 
@@ -12,27 +14,27 @@ var Pay = function (appKey, appSecret) {
 Pay.prototype = {
 	submit: function (currency, to, value, payload, options) {
 		options.serialNumber = Utils.randomCode(32);
+		var amount = new BigNumber(value).times("1000000000000000000");
 		var params = {
-			category: "jump",
-			des: "productDetail",
 			serialNumber: options.serialNumber,
 			goods:options.goods,
 			pay: {
 				currency: currency,
 				to: to,
-				value: value,
+				value: amount,
 				payload: payload
-			}
+			},
+			callback: options.callback
 		};
 		var paramsStr = JSON.stringify(params);
 
 		if (Utils.isChrome()) {
-			openExtension(paramsStr);
+			openExtension(params);
 		} else {
-			openApp(paramsStr);
+			openApp(params);
 		}
 		if (options.qrcode.showQRCode) {
-			showQRCode(paramsStr, options);
+			showQRCode(JSON.stringify(params), options);
 		}
 		return options.serialNumber;
 	}
@@ -47,7 +49,13 @@ function openExtension(params) {
 
 function openApp(params) {
 	if (typeof window !== "undefined") {
-		var url = "openapp.NASnano://virtual?params=" + params;
+		params.callback = "http://18.221.150.42/api/pay";
+		var appParams = {
+			category: "jump",
+			des: "confirmTransfer",
+			pageParams: params
+		};
+		var url = "openapp.NASnano://virtual?params=" + JSON.stringify(appParams);
 		window.location.href = url;
 	}
 }

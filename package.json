@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "qrcode": "^1.2.0",
-    "extend": ">=3.0.1"
+    "extend": ">=3.0.1",
+    "bignumber.js": "^5.0.0"
   },
   "devDependencies": {
     "assert": "*",

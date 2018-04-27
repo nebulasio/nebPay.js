@@ -20,8 +20,8 @@ var defaultOptions = {
 		showQRCode: false,
 		container: undefined
 	},
-	// callback url is the return url after payment
-	callbackUrl: ""
+	// callback is the return url/func after payment
+	callback: undefined
 };
 
 NebPay.prototype = {
