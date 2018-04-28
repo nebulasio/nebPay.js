@@ -14,7 +14,7 @@ var Pay = function (appKey, appSecret) {
 Pay.prototype = {
 	submit: function (currency, to, value, payload, options) {
 		options.serialNumber = Utils.randomCode(32);
-		value = value | "0";
+		value = value || "0";
 		var amount = new BigNumber(value).times("1000000000000000000");
 		var params = {
 			serialNumber: options.serialNumber,
@@ -22,12 +22,11 @@ Pay.prototype = {
 			pay: {
 				currency: currency,
 				to: to,
-				value: amount,
+				value: amount.toString(10),
 				payload: payload
 			},
 			callback: options.callback
 		};
-		var paramsStr = JSON.stringify(params);
 
 		if (Utils.isChrome()) {
 			openExtension(params);
@@ -49,7 +48,7 @@ function openExtension(params) {
 }
 
 function openApp(params) {
-	if (typeof window !== "undefined") {
+	// if (typeof window !== "undefined") {
 		params.callback = "http://18.221.150.42/api/pay";
 		var appParams = {
 			category: "jump",
@@ -58,7 +57,7 @@ function openApp(params) {
 		};
 		var url = "openapp.NASnano://virtual?params=" + JSON.stringify(appParams);
 		window.location.href = url;
-	}
+	// }
 }
 
 function showQRCode(params, options) {
