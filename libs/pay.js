@@ -28,11 +28,9 @@ Pay.prototype = {
 			callback: options.callback
 		};
 
-		if (Utils.isChrome()) {
-			openExtension(params);
-		} else {
-			openApp(params);
-		}
+		openExtension(params);
+		openApp(params);
+		
 		if (options.qrcode.showQRCode) {
 			showQRCode(JSON.stringify(params), options);
 		}
