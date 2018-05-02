@@ -3,6 +3,8 @@
 var extend = require('extend');
 var Pay = require("./libs/pay");
 
+var BigNumber = require("bignumber.js");
+
 var NAS = "NAS";
 
 var NebPay = function (appKey, appSecret) {
@@ -35,7 +37,10 @@ NebPay.prototype = {
 		this._pay.submit(NAS, to, value, payload, options);
 	},
 	nrc20pay: function (currency, to, value, options) {
-		val 
+		if (options.nrc20 && options.nrc20.decimals > 0) {
+			value = value || "0";
+			value = new BigNumber(value).times(new BigNumber(10).pow(options.nrc20.decimals)).toString(10);
+		}
 		var args = [to, value];
 		var payload = {
 			type: "call",
