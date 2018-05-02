@@ -32,6 +32,7 @@
                     desc: "test goods"
                 },
                 nrc20: {
+                    contractAddress: "",
                     name: "demoToken",
                     symbol: "NRC",
                     decimals: 18
@@ -44,9 +45,6 @@
             var source = document.getElementById("source").value;
             var args = document.getElementById("deployArgs").value;
             nebPay.deploy(source, sourceType, args, {
-                qrcode: {
-                    showQRCode: true
-                },
                 goods: {
                     name: "test",
                     desc: "test goods"
@@ -156,11 +154,11 @@
         <input type="text" id="callValue" placeholder="value"/>
     </div>
     <div style="display: inline-block">
-        <div>value:</div>
+        <div>function:</div>
         <input type="text" id="callFunction" placeholder="function name"/>
     </div>
     <div style="display: inline-block">
-        <div>value:</div>
+        <div>args:</div>
         <input type="text" id="callArgs" placeholder="call args"/>
     </div>
     <button type="button" onClick="onCallClick();">pay</button>
