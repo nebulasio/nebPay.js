@@ -29,11 +29,8 @@ Pay.prototype = {
 		};
 
 		openExtension(params);
-		openApp(params);
+		openApp(params, options);
 		
-		if (options.qrcode.showQRCode) {
-			showQRCode(JSON.stringify(params), options);
-		}
 		return options.serialNumber;
 	}
 };
@@ -45,7 +42,7 @@ function openExtension(params) {
 	}
 }
 
-function openApp(params) {
+function openApp(params, options) {
 	// if (typeof window !== "undefined") {
 		params.callback = "http://18.221.150.42/api/pay";
 		var appParams = {
@@ -55,6 +52,10 @@ function openApp(params) {
 		};
 		var url = "openapp.NASnano://virtual?params=" + JSON.stringify(appParams);
 		window.location.href = url;
+
+		if (options.qrcode.showQRCode) {
+			showQRCode(JSON.stringify(appParams), options);
+		}
 	// }
 }
 

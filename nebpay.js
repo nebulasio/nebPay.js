@@ -26,19 +26,25 @@ var defaultOptions = {
 
 NebPay.prototype = {
 	pay: function (to, value, options) {
-		options = extend(defaultOptions, options);
-		this._pay.submit(NAS, to, value, null, options);
-	},
-	nrc20pay: function (currency, to, value, func, args, options) {
 		var payload = {
-			function: func,
-			args: args
+			type: "binary"
 		};
 		options = extend(defaultOptions, options);
-		this._pay.submit(currency, to, value, payload, options);
+		this._pay.submit(NAS, to, value, payload, options);
+	},
+	nrc20pay: function (currency, to, value, options) {
+		var args = [to, value];
+		var payload = {
+			type: "call",
+			function: "transfer",
+			args: JSON.stringify(args)
+		};
+		options = extend(defaultOptions, options);
+		this._pay.submit(currency, "", value, payload, options);
 	},
 	deploy: function (source, sourceType, args, options) {
 		var payload = {
+			type: "deploy",
 			source: source,
 			sourceType: sourceType,
 			args: args
@@ -48,6 +54,7 @@ NebPay.prototype = {
 	},
 	call: function (to, value, func, args, options) {
 		var payload = {
+			type: "call",
 			function: func,
 			args: args
 		};
