@@ -48,7 +48,7 @@ NebPay.prototype = {
 			args: JSON.stringify(args)
 		};
 		options = extend(defaultOptions, options);
-		this._pay.submit(currency, "", value, payload, options);
+		this._pay.submit(currency, "", "0", payload, options);
 	},
 	deploy: function (source, sourceType, args, options) {
 		var payload = {
