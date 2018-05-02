@@ -21,7 +21,9 @@ var defaultOptions = {
 		container: undefined
 	},
 	// callback is the return url/func after payment
-	callback: undefined
+	callback: undefined,
+	// if use nrc20pay ,should input nrc20 params like name, symbol, decimals
+	nrc20: undefined
 };
 
 NebPay.prototype = {
@@ -33,6 +35,7 @@ NebPay.prototype = {
 		this._pay.submit(NAS, to, value, payload, options);
 	},
 	nrc20pay: function (currency, to, value, options) {
+		val 
 		var args = [to, value];
 		var payload = {
 			type: "call",

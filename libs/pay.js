@@ -25,7 +25,8 @@ Pay.prototype = {
 				value: amount.toString(10),
 				payload: payload
 			},
-			callback: options.callback
+			callback: options.callback,
+			nrc20: options.nrc20
 		};
 
 		openExtension(params);
