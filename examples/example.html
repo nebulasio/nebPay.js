@@ -5,11 +5,12 @@
     <script type="text/javascript">
         var NebPay = require("nebpay");
         var nebPay = new NebPay();
+        var serialNumber;
 
         function onPayClick() {
             var to = document.getElementById("to").value;
             var value = document.getElementById("value").value;
-            nebPay.pay(to, value, {
+            serialNumber = nebPay.pay(to, value, {
                 qrcode: {
                     showQRCode: true
                 },
@@ -18,12 +19,15 @@
                     desc: "test goods"
                 }
             });
+            setTimeout(() => {
+                onRefleshClick();
+            }, 1000);
         }
 
         function onNrc20PayClick() {
             var to = document.getElementById("nrc20to").value;
             var value = document.getElementById("nrc20value").value;
-            nebPay.nrc20pay("NRC", to, value, {
+            serialNumber = nebPay.nrc20pay("NRC", to, value, {
                 qrcode: {
                     showQRCode: true
                 },
@@ -38,18 +42,24 @@
                     decimals: 18
                 }
             });
+            setTimeout(() => {
+                onRefleshClick();
+            }, 1000);
         }
 
         function onDeployClick() {
             var sourceType = document.getElementById("sourceType").value;
             var source = document.getElementById("source").value;
             var args = document.getElementById("deployArgs").value;
-            nebPay.deploy(source, sourceType, args, {
+            serialNumber = nebPay.deploy(source, sourceType, args, {
                 goods: {
                     name: "test",
                     desc: "test goods"
                 }
             });
+            setTimeout(() => {
+                onRefleshClick();
+            }, 1000);
         }
 
         function onCallClick() {
@@ -57,7 +67,7 @@
             var value = document.getElementById("callValue").value;
             var callFunction = document.getElementById("callFunction").value;
             var callArgs = document.getElementById("callArgs").value;
-            nebPay.call(to, value, callFunction, callArgs, {
+            serialNumber = nebPay.call(to, value, callFunction, callArgs, {
                 qrcode: {
                     showQRCode: true
                 },
@@ -66,7 +76,21 @@
                     desc: "test goods"
                 }
             });
+            setTimeout(() => {
+                onRefleshClick();
+            }, 1000);
         }
+
+        function onRefleshClick() {
+            nebPay.queryPayInfo(serialNumber)
+            .then(function (resp) {
+                document.getElementById('result').value = resp;
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+        }
+
     </script>
     <style>
         textarea {
@@ -163,5 +187,12 @@
     </div>
     <button type="button" onClick="onCallClick();">pay</button>
 </div>
+
+<div>
+    <div>pay result:</div>
+    <textarea id="result" readonly="readonly"></textarea>
+    <button type="button" onClick="onRefleshClick();">reflesh</button>
+</div>
+
 </body>
 </html>

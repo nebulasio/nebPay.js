@@ -2,8 +2,9 @@
 
 var BigNumber = require("bignumber.js");
 
-var Utils = require("./Utils");
+var Utils = require("./utils");
 var QRCode = require("./qrcode");
+var Config = require("./config");
 
 var openExtension = require("./extensionUtils.js");
 
@@ -17,7 +18,7 @@ Pay.prototype = {
 	submit: function (currency, to, value, payload, options) {
 		options.serialNumber = Utils.randomCode(32);
 		value = value || "0";
-		var amount = new BigNumber(value).times("1000000000000000000");
+		var amount = new BigNumber(value).times("1000000000000000000");//10^18
 		var params = {
 			serialNumber: options.serialNumber,
 			goods:options.goods,
@@ -47,7 +48,7 @@ Pay.prototype = {
 
 function openApp(params, options) {
 	// if (typeof window !== "undefined") {
-		params.callback = "http://18.221.150.42/api/pay";
+		params.callback = Config.payUrl;
 		var appParams = {
 			category: "jump",
 			des: "confirmTransfer",

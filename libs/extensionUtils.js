@@ -1,7 +1,5 @@
 "use strict";
 
-var Utils = require("./Utils");
-
 var callbackMap = {};
 
 var openExtension = function (params) {

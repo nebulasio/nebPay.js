@@ -1,6 +1,8 @@
 "use strict";
 
 var extend = require('extend');
+var http = require("./libs/http");
+var config = require("./libs/config");
 var Pay = require("./libs/pay");
 
 var BigNumber = require("bignumber.js");
@@ -24,7 +26,7 @@ var defaultOptions = {
 	},
 	// callback is the return url/func after payment
 	callback: undefined,
-	// if use nrc20pay ,should input nrc20 params like name, symbol, decimals
+	// if use nrc20pay ,should input nrc20 params like address, name, symbol, decimals
 	nrc20: undefined
 };
 
@@ -34,7 +36,7 @@ NebPay.prototype = {
 			type: "binary"
 		};
 		options = extend(defaultOptions, options);
-		this._pay.submit(NAS, to, value, payload, options);
+		return this._pay.submit(NAS, to, value, payload, options);
 	},
 	nrc20pay: function (currency, to, value, options) {
 		if (options.nrc20 && options.nrc20.decimals > 0) {
@@ -48,7 +50,7 @@ NebPay.prototype = {
 			args: JSON.stringify(args)
 		};
 		options = extend(defaultOptions, options);
-		this._pay.submit(currency, "", "0", payload, options);
+		return this._pay.submit(currency, "", "0", payload, options);
 	},
 	deploy: function (source, sourceType, args, options) {
 		var payload = {
@@ -58,7 +60,7 @@ NebPay.prototype = {
 			args: args
 		};
 		options = extend(defaultOptions, options);
-		this._pay.submit(NAS, "", "0", payload, options);
+		return this._pay.submit(NAS, "", "0", payload, options);
 	},
 	call: function (to, value, func, args, options) {
 		var payload = {
@@ -67,7 +69,7 @@ NebPay.prototype = {
 			args: args
 		};
 		options = extend(defaultOptions, options);
-		this._pay.submit(NAS, to, value, payload, options);
+		return this._pay.submit(NAS, to, value, payload, options);
 	},
     simulateCall: function (to, value, func, args, options) {
         var payload = {
@@ -76,8 +78,12 @@ NebPay.prototype = {
             args: args
         };
         options = extend(defaultOptions, options);
-        this._pay.submit(NAS, to, value, payload, options);
-    }
+        return this._pay.submit(NAS, to, value, payload, options);
+	},
+	queryPayInfo: function(serialNumber) {
+		var url = config.payUrl + "/query?payId=" + serialNumber;
+		return http.get(url);
+	}
 };
 
 module.exports = NebPay;
