@@ -68,7 +68,16 @@ NebPay.prototype = {
 		};
 		options = extend(defaultOptions, options);
 		this._pay.submit(NAS, to, value, payload, options);
-	}
+	},
+    simulateCall: function (to, value, func, args, options) {
+        var payload = {
+            type: "simulateCall",
+            function: func,
+            args: args
+        };
+        options = extend(defaultOptions, options);
+        this._pay.submit(NAS, to, value, payload, options);
+    }
 };
 
 module.exports = NebPay;

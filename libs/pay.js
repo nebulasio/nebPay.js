@@ -5,6 +5,8 @@ var BigNumber = require("bignumber.js");
 var Utils = require("./Utils");
 var QRCode = require("./qrcode");
 
+var openExtension = require("./extensionUtils.js");
+
 var Pay = function (appKey, appSecret) {
 	// TODO: currently not use
 	this.appKey = appKey;
@@ -36,12 +38,12 @@ Pay.prototype = {
 	}
 };
 
-function openExtension(params) {
-	// TODO: start chrom extension
-	if (typeof window !== "undefined") {
-		window.postMessage(params,"*");
-	}
-}
+// function openExtension(params) {
+// 	// TODO: start chrom extension
+// 	if (typeof window !== "undefined") {
+// 		window.postMessage(params,"*");
+// 	}
+// }
 
 function openApp(params, options) {
 	// if (typeof window !== "undefined") {
