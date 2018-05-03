@@ -7,7 +7,7 @@ var callbackMap = {};
 var openExtension = function (params) {
 
     if(params.callback){
-        callbackMap[params.serialNumber] = params;
+        callbackMap[params.serialNumber] = params.callback;
     }
     params.callback = undefined;     //postMessage can't contains a function attr
 
@@ -26,13 +26,11 @@ window.addEventListener('message', function(resp) {
         return;
 
     var key = resp.data.serialNumber;
-    var params = callbackMap[key];
-    if(params){
-        var callback = params.callback;
-        if(typeof callback === "function"){
-            callback(resp.data);
-        }
+    var callback = callbackMap[key];
+    if(typeof callback === "function"){
+        callback(resp.data);
     }
+
     //delete callbackMap[key];
 
 });
