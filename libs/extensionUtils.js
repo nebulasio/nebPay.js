@@ -4,10 +4,11 @@ var callbackMap = {};
 
 var openExtension = function (params) {
 
-    if(params.callback){
-        callbackMap[params.serialNumber] = params.callback;
+    if(params.listener){
+        callbackMap[params.serialNumber] = params.listener;
     }
     params.callback = undefined;     //postMessage can't contains a function attr
+    params.listener = undefined;     //postMessage can't contains a function attr
 
     window.postMessage({
         "src" : "nebPay",
@@ -26,7 +27,7 @@ window.addEventListener('message', function(resp) {
     var key = resp.data.serialNumber;
     var callback = callbackMap[key];
     if(typeof callback === "function"){
-        callback(resp.data);
+        callback(resp.data.resp);
     }
 
     //delete callbackMap[key];

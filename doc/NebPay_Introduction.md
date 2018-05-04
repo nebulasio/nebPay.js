@@ -180,5 +180,5 @@ nebPay.queryPayInfo(serialNumber)
 {"result":"null","execute_err":"","estimate_gas":"20168"}
 ```
 
-#### 
+#### 附
 在开发Dapp页面时，如果不想使用NebPay，也可以使用neb.js直接访问星云链。

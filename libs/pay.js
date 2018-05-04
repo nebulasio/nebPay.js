@@ -28,7 +28,8 @@ Pay.prototype = {
 				value: amount.toString(10),
 				payload: payload
 			},
-			callback: options.callback,
+            callback: options.callback,
+            listener: options.listener,
 			nrc20: options.nrc20
 		};
 
