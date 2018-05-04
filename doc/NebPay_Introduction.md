@@ -85,7 +85,7 @@ var defaultOptions = {
 
 参数说明：
 
-`currency` NRC20代币名称
+`currency` NRC20代币符号, 即代币简称, 等同于options.nrc20.symbol
 
 `to` 转账目的地址，该地址为nebulas钱包地址
 
@@ -97,10 +97,10 @@ var defaultOptions = {
 options = {
     //nrc20参数介绍
     nrc20: {  
-        address: "", //contract address of nrc20
-        decimals: 0,
-        name: "",
-        symbol: ""
+        address: "", //NRC20 代币的合约地址
+        decimals: 0,    //代币小数点位数, 决定了呆逼的最小单位
+        name: "",    //代币全程, 比如"Nebulas Token"
+        symbol: ""  //代币简称, 比如"NAS","EOS"
     }
 }
 ```
@@ -180,5 +180,5 @@ nebPay.queryPayInfo(serialNumber)
 {"result":"null","execute_err":"","estimate_gas":"20168"}
 ```
 
-#### 附
+### 附
 在开发Dapp页面时，如果不想使用NebPay，也可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。

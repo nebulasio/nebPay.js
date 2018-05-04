@@ -86,7 +86,7 @@ parameters：
 
 parameters：
 
-`currency` Name og NRC20 Token
+`currency` symbol of NRC20 Token, 
 
 `to` Destination address, which is a Nebulas wallet address
 
@@ -99,9 +99,9 @@ options = {
     //nrc20 parameter
     nrc20: {  
         address: "", //contract address of nrc20
-        decimals: 0,
-        name: "",
-        symbol: ""
+        decimals: 0,    //
+        name: "",    //Token full name, such as "Nebulas Token"
+        symbol: ""  //Token symbol,  such as "NAS","EOS". it's the same with "currency"
     }
 }
 ```
@@ -182,5 +182,5 @@ The return messages of `simulateCall` are like this:
 {"result":"null","execute_err":"","estimate_gas":"20168"}
 ```
 
-#### More info
+### More info
 If you don't like to use NebPay while developing your Dapp page, you can also use [neb.js](https://github.com/nebulasio/neb.js) to get access to Nebulas blockchain directly.
