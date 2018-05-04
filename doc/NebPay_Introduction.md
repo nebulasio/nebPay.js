@@ -37,7 +37,7 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
         },        
         listener: undefined //为浏览器插件指定listener,处理交易返回结果
     }
-    serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32位的交易序列号，Dapp端用该序列号查询交易结果
+    serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32字节的交易序列号，Dapp端用该序列号查询交易结果
 </script>
 ```
 
@@ -87,7 +87,7 @@ var defaultOptions = {
 
 `currency` NRC20代币名称
 
-`to` 转账目的地址，改地址为nebulas钱包地址
+`to` 转账目的地址，该地址为nebulas钱包地址
 
 `value` 转账数额，单位为 NRC20 token
 
@@ -150,7 +150,7 @@ simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://git
 
 参数说明：
 
-`serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32位随机数。钱包App会将交易结果会上传到交易查询呢服务器，Dapp端用` queryPayInfo(serialNumber)`来查询交易结果信息。
+`serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32字节随机数。钱包App会将交易结果会上传到交易查询服务器，Dapp端用 `queryPayInfo(serialNumber)` 来查询交易结果信息。
 返回值: `queryPayInfo`会返回一个`Promise`.
 
 ```js
@@ -165,8 +165,8 @@ nebPay.queryPayInfo(serialNumber)
 
 #### 交易返回信息的处理
 浏览器插件和钱包app对交易返回信息有不同的处理方式。
-* 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号去获取交易信息.
-* 使用浏览器插件发送交易时可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以将交易结果发送到交易查询服务器。
+* 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号以获取交易信息.
+* 使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面，Dapp端可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以实现将交易结果发送到交易查询服务器。
 
 #### 交易返回信息
 
@@ -181,4 +181,4 @@ nebPay.queryPayInfo(serialNumber)
 ```
 
 #### 附
-在开发Dapp页面时，如果不想使用NebPay，也可以使用neb.js直接访问星云链。
+在开发Dapp页面时，如果不想使用NebPay，也可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。
