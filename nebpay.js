@@ -26,6 +26,8 @@ var defaultOptions = {
 	},
 	// callback is the return url/func after payment
 	callback: undefined,
+	//listener：specify a listener function to handle payment feedback message(only valid for browser extension)
+	listener: undefined,
 	// if use nrc20pay ,should input nrc20 params like address, name, symbol, decimals
 	nrc20: undefined
 };
@@ -43,6 +45,11 @@ NebPay.prototype = {
 			value = value || "0";
 			value = new BigNumber(value).times(new BigNumber(10).pow(options.nrc20.decimals)).toString(10);
 		}
+        var address = "";
+        if (options.nrc20 && options.nrc20.address) {
+            address = options.nrc20.address
+		}
+
 		var args = [to, value];
 		var payload = {
 			type: "call",
@@ -50,7 +57,7 @@ NebPay.prototype = {
 			args: JSON.stringify(args)
 		};
 		options = extend(defaultOptions, options);
-		return this._pay.submit(currency, "", "0", payload, options);
+		return this._pay.submit(currency, address, "0", payload, options);
 	},
 	deploy: function (source, sourceType, args, options) {
 		var payload = {
