@@ -28,10 +28,13 @@ Here you should see a bunch of js files.
 ## Usage
 `nebPay.js ` is a useful library for nebulas dapp developers. It provides rich underlying support in web's dapp. It implements the payment functions.
 
-The use of neb.js can be used as examples:
+The use of nebpay can be used as examples:
 
 * [example](examples/example.html) 
 
+## Documention
+
+All NebPay SDK documents are in folder [doc](/doc).
 
 ## Wiki
 
