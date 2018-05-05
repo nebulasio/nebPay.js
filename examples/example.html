@@ -17,10 +17,11 @@
                 goods: {
                     name: "test",
                     desc: "test goods"
-                }
+                },
+                listener: listener  //set listener for extension transaction result
             });
             setTimeout(() => {
-                onRefleshClick();
+                onrefreshClick();   //search transaction result from server (result upload to server by app)
             }, 1000);
         }
 
@@ -43,7 +44,7 @@
                 }
             });
             setTimeout(() => {
-                onRefleshClick();
+                onrefreshClick();
             }, 1000);
         }
 
@@ -58,7 +59,7 @@
                 }
             });
             setTimeout(() => {
-                onRefleshClick();
+                onrefreshClick();
             }, 1000);
         }
 
@@ -74,21 +75,45 @@
                 goods: {
                     name: "test",
                     desc: "test goods"
-                }
+                },
+                listener: listener  //set listener for extension transaction result
             });
             setTimeout(() => {
-                onRefleshClick();
+                onrefreshClick();
             }, 1000);
         }
 
-        function onRefleshClick() {
-            nebPay.queryPayInfo(serialNumber)
+        function onSimulateCallClick() {
+            var to = document.getElementById("simulateCallTo").value;
+            var value = document.getElementById("simulateCallValue").value;
+            var callFunction = document.getElementById("simulateCallFunction").value;
+            var callArgs = document.getElementById("simulateCallArgs").value;
+            nebPay.simulateCall(to, value, callFunction, callArgs, {
+                qrcode: {
+                    showQRCode: true
+                },
+                goods: {
+                    name: "test",
+                    desc: "test goods"
+                },
+                listener: listener  //set listener for extension transaction result
+            });
+            document.getElementById('result').value = `app does not support simulateCall !`;
+        }
+
+        function onrefreshClick() {
+            nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
             .then(function (resp) {
                 document.getElementById('result').value = resp;
             })
             .catch(function (err) {
                 console.log(err);
             });
+        }
+
+        function listener(resp) {
+            console.log("resp: " + JSON.stringify(resp))
+            document.getElementById("resultFromExtension").value = JSON.stringify(resp)
         }
 
     </script>
@@ -117,6 +142,7 @@
     <button type="button" onClick="onPayClick();">pay</button>
 </div>
 
+
 <h5></h5>
 
 <div>
@@ -137,30 +163,6 @@
         <input type="text" id="nrc20value" placeholder="value"/>
     </div>
     <button type="button" onClick="onNrc20PayClick();">pay</button>
-</div>
-
-<h5></h5>
-
-<div>
-    <div>deploy</div>
-
-    <div style="display: block">
-        <div>sourceType:</div>
-        <select id="sourceType">
-            <option value ="js" selected = "selected">JavaScript</option>
-            <option value ="ts">TypeScript</option>
-        </select>
-    </div>
-
-    <div style="display: block">
-        <div>source:</div>
-        <textarea id="source"></textarea>
-    </div>
-    <div style="display: block">
-        <div>args:</div>
-        <input type="text" id="deployArgs" placeholder="deploy args"/>
-    </div>
-    <button type="button" onClick="onDeployClick();">pay</button>
 </div>
 
 <h5></h5>
@@ -188,10 +190,41 @@
     <button type="button" onClick="onCallClick();">pay</button>
 </div>
 
+<h5></h5>
+
 <div>
-    <div>pay result:</div>
+    <div>Simulate Call (only supported by extension)</div>
+
+    <div style="display: inline-block">
+        <div>to:</div>
+        <input type="text" id="simulateCallTo" placeholder="contract address"/>
+    </div>
+
+    <div style="display: inline-block">
+        <div>value:</div>
+        <input type="text" id="simulateCallValue" placeholder="value"/>
+    </div>
+    <div style="display: inline-block">
+        <div>function:</div>
+        <input type="text" id="simulateCallFunction" placeholder="function name"/>
+    </div>
+    <div style="display: inline-block">
+        <div>args:</div>
+        <input type="text" id="simulateCallArgs" placeholder="call args"/>
+    </div>
+    <button type="button" onClick="onSimulateCallClick();">pay</button>
+</div>
+
+<h5></h5>
+
+<div>
+    <div>pay result queried from server with serialNumber,
+        you need to click the refresh button th check if the tx result is uploaded to server</div>
     <textarea id="result" readonly="readonly"></textarea>
-    <button type="button" onClick="onRefleshClick();">reflesh</button>
+    <button type="button" onClick="onrefreshClick();">refresh</button>
+
+    <div>pay result listened directly from extension:</div>
+    <textarea id="resultFromExtension" readonly="readonly"></textarea>
 </div>
 
 </body>

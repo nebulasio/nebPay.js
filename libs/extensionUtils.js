@@ -7,7 +7,7 @@ var openExtension = function (params) {
     if(params.listener){
         callbackMap[params.serialNumber] = params.listener;
     }
-    params.callback = undefined;     //postMessage can't contains a function attr
+    //params.callback = undefined;     //postMessage can't contains a function attr
     params.listener = undefined;     //postMessage can't contains a function attr
 
     window.postMessage({

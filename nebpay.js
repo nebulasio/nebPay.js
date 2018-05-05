@@ -24,8 +24,8 @@ var defaultOptions = {
 		showQRCode: false,
 		container: undefined
 	},
-	// callback is the return url/func after payment
-	callback: undefined,
+	// callback is the return url after payment
+	callback: config.payUrl,
 	//listener：specify a listener function to handle payment feedback message(only valid for browser extension)
 	listener: undefined,
 	// if use nrc20pay ,should input nrc20 params like address, name, symbol, decimals

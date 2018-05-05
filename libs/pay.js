@@ -49,7 +49,7 @@ Pay.prototype = {
 
 function openApp(params, options) {
 	// if (typeof window !== "undefined") {
-		params.callback = Config.payUrl;
+		//params.callback = Config.payUrl;
 		var appParams = {
 			category: "jump",
 			des: "confirmTransfer",
