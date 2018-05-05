@@ -1,7 +1,7 @@
 # nebPay
 
 
-This is the Nebulas payment JavaScript API. Users can use it in brower on both pc and mobile. Users can do NAS payment through chrome extension and IOS/Android wallet with it. [nebPay](https://github.com/nebulasio/nebPay)
+This is the Nebulas payment JavaScript API. Users can use it in browser on both PC and mobile. Users can do NAS payment through chrome extension and iOS/Android wallet with it. [nebPay](https://github.com/nebulasio/nebPay)
 
 
 ## Install && Package
