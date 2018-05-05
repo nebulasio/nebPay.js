@@ -1,6 +1,6 @@
 "use strict";
 
-var payUrl = "http://18.221.150.42/api/pay";
+var payUrl = "https://pay.nebulas.io/api/pay";
 
 module.exports = {
     payUrl: payUrl

@@ -1,30 +1,32 @@
 ## Introduction of NebPay SDK
 
-### 简介
-NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在Dapp页面中使用NebPay API可以通过浏览器插件钱包、手机app钱包等实现交易支付和合约调用。
+### Overview
+NebPay SDK provides a unified payment interface for transactions on different platforms. While using NebPay in your Dapp page, you can send transaction throw desktop browser extension and mobile wallet App.
 
-### 接口介绍
+### API introduction
 
-目前NebPay 提供了以下五个接口：
+The APIs provided by NebPay SDK are as flows：
  
-接口 | 简介 
+API | Introduction 
 :--- | :---
-pay | 用于账户间的NAS转账
-nrc20pay|用于NRC20代币的转账
-deploy|用于部署智能合约
-call|用于调用智能合约
-simulateCall|用于模拟运行智能合约的调用
-queryPayInfo|用于查询支付结果
+[pay](#pay) | Ordinary transactions between users
+[nrc20pay](#nrc20pay)|NRC20 token transactions
+[deploy](#deploy)|Delpoy a smart contract
+[call](#call)|Call a smart contract function
+[simulateCall](#simulatecall)|simulate calling smart contract function
+[queryPayInfo](#querypayinfo)|query a transaction result
 
-以上接口中，前四个api对应于[SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction)接口，只是细化了`SendTransaction`的使用场景。simulateCall 对应于RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call)接口，只用于和浏览器扩展的交互，移动端钱包app不支持该接口。
+The first four APIs above are correspond to [SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction) API，and just refined the usage scenario of `SendTransaction`。
+simulateCall is correspond to [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call) API，which is only used for interactions with browser extension, and is not supported by mobile wallet App.
 
 
-### 使用说明
-在开发Dapp时，如果要使用NebPay SDK来处理交易， 需要将`nebPay.js`插入到Dapp页面中， 然后就可以使用nebpay模块来发送交易了。
+### How to use NebPay
+While developing your Dapp, if you want to use NebPay SDK to handle transaction, you need to include `nebPay.js` into your Dapp page. And then you can use nebpay module to send transactions.
 
-当用户在桌面浏览器（chrome）使用Dapp，nebPay会调用浏览器插件来处理交易。当在手机端使用Dapp，nebPay会跳转到钱包app来处理交易.
+When users using your Dapp whit desktop browsers (chrome), NebPay will call the browser plugin to process the transaction. And when your Dapp is used on mobile phone, nebPay will jump to the wallet App to process the transaction.
 
-Dapp中使用NebPay的例子， 可参考`examples/example.html`.
+Here is an example of using NebPay in you Dapp. Please refer to `examples/example.html` for more information.
+
 ```html
 <script src="../dist/nebPay.js"></script>
 <script >
@@ -32,126 +34,163 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
     var nebPay = new NebPay();    
     var serialNumber;
     var options = {
-        goods: {        //商品描述
+        goods: {        //commodity description
             name: "example"
         },        
-        listener: undefined //为浏览器插件指定listener,处理交易返回结果
+        listener: undefined //specify a listener function for browser extension, which will handle the tx result
     }
-    serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32字节的交易序列号，Dapp端用该序列号查询交易结果
+    serialNumber = nebPay.pay(to, value, options); //a serialNumber will be returned when calling the NebPay API, then you can query the tx result with this SerialNumber
 </script>
 ```
 
-#### 接口&参数说明
+#### Introduction of API & Parameters
 
-##### options参数说明
+##### options
 
-每个接口都有一个共同的参数`options`，该参数的详细介绍如下:
+Every NebPay API has a common parameter `options`. And here is a detailed introduction of it.
+
 ```js
 var defaultOptions = {
-	goods: {        //Dapp端对当前交易商品的描述信息
-		name: "",       //商品名称
-		desc: "",       //描述信息
-		orderId: "",    //订单ID
-		ext: ""         //扩展字段
+	goods: {        //Description of this commodity being  traded
+		name: "",       //name of commodity
+		desc: "",       //description
+		orderId: "",    //order ID
+		ext: ""         //extended field
 	},
 	qrcode: {
-		showQRCode: false,      //是否显示二维码信息
-		container: undefined    //指定显示二维码的canvas容器，不指定则生成一个默认canvas
+		showQRCode: false,      //Whether to display QR code information
+		container: undefined    //Specifies the canvas container that displays the QR code. 
 	},
-	// callback 是记录交易返回信息的交易查询服务器地址（目前是固定的地址，Dapp开发者暂时不能指定自己的交易查询服务器）
+	// callback is the server address that records tx results (the results is uploaded by wallet App)
 	callback: undefined,
-	// listener: 指定一个listener函数来处理交易返回信息（仅用于浏览器插件，App钱包不支持listener）
+	// listener： specify a listener function to handle payment feedback message（just used by browser extension，App wallet doesn't support listener）
 	listener: undefined,
-	// if use nrc20pay ,should input nrc20 params like name, address, symbol, decimals
+	// if use nrc20pay API, you need to specify nrc20 params like name, address, symbol, decimals
 	nrc20: undefined
 };
 ```
+***
 
 ##### pay
 
     pay(to, value, options)
 
-参数说明：
+###### parameters：
 
-`to` 转账目的地址
+- `to` Destination address of this transfer
 
-`value` 转账数额，单位为nas。（wei是Nas的最小单位，1 Nas = 1e18 wei）
+- `value` Transfer amount in nas.
 
-`options` 参见 options参数说明
+- `options` Refer to [options](#options)
+
+###### return
+
+- `serialNumber` transaction's serival number, used for query transaction info.
+
+*** 
 
 ##### nrc20pay
 
-    nrc20pay(currency, to, value, options)
+**[Currently not support for mobile wallet app]**
 
-参数说明：
+ ```
+ nrc20pay(currency, to, value, options)
+ ```
 
-`currency` NRC20代币符号, 即代币简称, 等同于options.nrc20.symbol
+###### parameters：
 
-`to` 转账目的地址，该地址为nebulas钱包地址
+- `currency` symbol of NRC20 Token, 
 
-`value` 转账数额，单位为 NRC20 token
+- `to` Destination address, which is a Nebulas wallet address
 
-`options` 必须指定代币的小数点位数和代币合约地址，另外可指定代币名称、符号。
+- `value` Transfer amount，The unit is this NRC20 token.
+
+- `options` decimals and Token SmartContract address is required, while Token name and symbol is optional。
 
 ```js
 options = {
-    //nrc20参数介绍
+    //nrc20 parameter
     nrc20: {  
-        address: "", //NRC20 代币的合约地址
-        decimals: 0,    //代币小数点位数, 决定了呆逼的最小单位
-        name: "",    //代币全程, 比如"Nebulas Token"
-        symbol: ""  //代币简称, 比如"NAS","EOS"
+        address: "", //contract address of nrc20
+        decimals: 0,    //
+        name: "",    //Token full name, such as "Nebulas Token"
+        symbol: ""  //Token symbol,  such as "NAS","EOS". it's the same with "currency"
     }
 }
 ```
 
+###### return
+
+- `serialNumber` transaction's serival number, used for query transaction info.
+
+***
+
 ##### deploy
 
-    deploy(source, sourceType, args, options)
+**[Currently not support for mobile wallet app]**
 
-参数说明：
+```
+deploy(source, sourceType, args, options)
+```
 
-`source` 合约源代码
+###### parameters：
 
-`sourceType` 合约代码类型
+- `source` source code of smart contract
 
-`args` 合约的初始化函数参数，初始化函数无参数则留空，参数格式为参数数组的JSON字符串，比如`["arg"]` ， `["arg1","arg2"]`。
+- `sourceType` source type of smart contract
 
-`options` 参见 options参数说明
+- `args` initialization parameters of the SmartContract. parameters are in the form of JSON string of the parameters array, such as`["arg"]` , `["arg1","arg2"]`.
 
+- `options` Refer to [options](#options)
+
+###### return
+
+- `serialNumber` transaction's serival number, used for query transaction info.
+
+***
 
 ##### call
 
     call(to, value, func, args, options)
 
-参数说明：
+###### parameters：
 
-`to` 合约地址
+- `to` address of smart contract
 
-`value` 转账数额，单位为nas。注意value是向合约地址转账，如果合约没有相关的转出函数，则转入的Nas将无法转出。
+- `value` Transfer amount in nas. Note that the value is transferred to the contract address. If the contract does not have an associated transfer out function, the transferred Nas could not be reached any more.
 
-`func` 要调用的合约函数名
+- `func` the function name that will be called
 
-`args` 调用的函数参数，格式为参数数组的JSON字符串，比如`["arg"]` ， `["arg1","arg2"]`。
+`args` arguments, in the form of a JSON string of arguments array, such as `["arg"]`, `["arg1","arg2"]`.
 
-`options` 参见 options参数说明
+`options` Refer to `options` parameter description
 
-##### simulateCall
+##### simulatecall
 
-    simulateCall(to, value, func, args, options)
+**[Only support for chrom extension]**
 
-参数说明：
+```
+simulateCall(to, value, func, args, options)
+```
 
-simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call)接口。用来模拟执行合约调用，可以得到合约运行结果、预计gas消耗。主要用于调用合约中的查询函数，得到该函数的返回值。
+###### parameters：
+
+The parameters of `simulateCall` is the same with `call` API. It's correspond to RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call) interface. It is used to simulate calling a SmartContract function, and it returns the result of SmartContract execution and estimated gas.
+
+***
 
 ##### queryPayInfo
 
-    queryPayInfo(serialNumber)
+```
+queryPayInfo(serialNumber)
+```
 
-参数说明：
+###### parameters：
 
-`serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32字节随机数。钱包App会将交易结果会上传到交易查询服务器，Dapp端用 `queryPayInfo(serialNumber)` 来查询交易结果信息。
-返回值: `queryPayInfo`会返回一个`Promise`.
+- `serialNumber` SerialNumber of this transaction, it's a random number of 32 bytes. After sending a transaction with the interface described above, a serial number of the transaction will be returned. Wallet App will uploaded the tx result to a tx query server, and you can use `queryPayInfo(serialNumber)` to query the tx result.
+
+###### return
+The return value of `queryPayInfo` is a `Promise`. You can handle the result as follows:
 
 ```js
 nebPay.queryPayInfo(serialNumber)
@@ -163,22 +202,25 @@ nebPay.queryPayInfo(serialNumber)
   });
 ```
 
-#### 交易返回信息的处理
-浏览器插件和钱包app对交易返回信息有不同的处理方式。
-* 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号以获取交易信息.
-* 使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面，Dapp端可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以实现将交易结果发送到交易查询服务器。
+#### Dealing with transaction results
 
-#### 交易返回信息
+It is different between browser extension and wallet app when handling transaction results.
+* When using wallet App to send tx, wallet App can't return tx result back to Dapp page directly. Hence wallet App will send the tx result to a server. The Dapp side need to record the SerialNumber of a tx, and then use `queryPayInfo` to query the tx result from this server.
+* When using a browser extension to send tx, the extension can send back tx result directly, and you can just specify a  `listener` function to handle tx result. 
 
- `pay`, `nrc20pay`, `deploy`, `call`的返回信息格式为:
+#### Transaction result message
+
+The return messages of `pay`, `nrc20pay`, `deploy`, `call` API are like this:
 ```json
-{"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""}
+{"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
+...
+}
 ```
 
-`simulateCall`的返回信息格式为:
+The return messages of `simulateCall` are like this:
 ```json
 {"result":"null","execute_err":"","estimate_gas":"20168"}
 ```
 
-### 附
-在开发Dapp页面时，如果不想使用NebPay，也可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。
+### More info
+If you don't like to use NebPay while developing your Dapp page, you can also use [neb.js](https://github.com/nebulasio/neb.js) to get access to Nebulas blockchain directly.
