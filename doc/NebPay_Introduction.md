@@ -11,9 +11,8 @@ API | Introduction
 :--- | :---
 [pay](#pay) | Ordinary transactions between users
 [nrc20pay](#nrc20pay)|NRC20 token transactions
-[deploy](#deploy)|Delpoy a smart contract
+[deploy](#deploy)|Deploy a smart contract
 [call](#call)|Call a smart contract function
-[simulateCall](#simulatecall)|simulate calling smart contract function
 [queryPayInfo](#querypayinfo)|query a transaction result
 
 The first four APIs above are correspond to [SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction) API，and just refined the usage scenario of `SendTransaction`。
@@ -165,18 +164,6 @@ deploy(source, sourceType, args, options)
 
 `options` Refer to `options` parameter description
 
-##### simulatecall
-
-**[Only support for chrom extension]**
-
-```
-simulateCall(to, value, func, args, options)
-```
-
-###### parameters：
-
-The parameters of `simulateCall` is the same with `call` API. It's correspond to RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call) interface. It is used to simulate calling a SmartContract function, and it returns the result of SmartContract execution and estimated gas.
-
 ***
 
 ##### queryPayInfo
@@ -210,16 +197,43 @@ It is different between browser extension and wallet app when handling transacti
 
 #### Transaction result message
 
-The return messages of `pay`, `nrc20pay`, `deploy`, `call` API are like this:
+The tx result queried by  `queryPayInfo` is a JSON string, the format of this JSON is:
+```json
+//query failed
+{
+    "code": 1,  
+    "data": {},
+    "msg": "payId ZBTSkk74dB4tPJI9J8FDFMu270h7yaut get transaction error"
+},
+//query succeed
+{
+    "code": 0,
+    "data": {
+        "data": null,
+        "contractAddress": "",
+        "type": "binary",
+        "nonce": 136,
+        "gasLimit": "30000",
+        "gasUsed": "20000",
+        "chainId": 1001,
+        "from": "n1JmhE82GNjdZPNZr6dgUuSfzy2WRwmD9zy",
+        "to": "n1JmhE82GNjdZPNZr6dgUuSfzy2WRwmD9zy",
+        "value": "1000000000000000000",
+        "hash": "f9549a5c01f50f372607b9fd29bf15d483246578f6cc7008d6e2a537920802e6",
+        "gasPrice": "1000000",
+        "status": 1,
+        "timestamp": 1525508076
+    },
+    "msg": "success"
+}
+```
+
+For browser, if you specified a `listener` function, then a `tahash` will be returned. The format of
+`tahash` are like this:
 ```json
 {"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
 ...
 }
-```
-
-The return messages of `simulateCall` are like this:
-```json
-{"result":"null","execute_err":"","estimate_gas":"20168"}
 ```
 
 ### More info
