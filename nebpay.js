@@ -47,7 +47,7 @@ NebPay.prototype = {
 		}
         var address = "";
         if (options.nrc20 && options.nrc20.address) {
-            address = options.nrc20.address
+            address = options.nrc20.address;
 		}
 
 		var args = [to, value];
