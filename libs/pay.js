@@ -2,7 +2,7 @@
 
 var BigNumber = require("bignumber.js");
 
-var Utils = require("./utils");
+var Utils = require("./Utils");
 var QRCode = require("./qrcode");
 var Config = require("./config");
 
