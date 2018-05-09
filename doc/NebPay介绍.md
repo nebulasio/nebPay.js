@@ -58,7 +58,7 @@ var defaultOptions = {
 		showQRCode: false,      //是否显示二维码信息
 		container: undefined    //指定显示二维码的canvas容器，不指定则生成一个默认canvas
 	},
-	// callback 是记录交易返回信息的交易查询服务器地址（目前是固定的地址，Dapp开发者暂时不能指定自己的交易查询服务器）
+	// callback 是记录交易返回信息的交易查询服务器地址，不指定则使用默认地址
 	callback: undefined,
 	// listener: 指定一个listener函数来处理交易返回信息（仅用于浏览器插件，App钱包不支持listener）
 	listener: undefined,
@@ -199,8 +199,11 @@ nebPay.queryPayInfo(serialNumber)
 
 #### 交易返回信息的处理
 浏览器插件和钱包app对交易返回信息有不同的处理方式。
-* 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号以获取交易信息.
+* 跳转钱包APP发送交易时，钱包App无法直接返回消息给Dapp页面，所以App会将交易信息发送到一个交易查询服务器。
+Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号以获取交易信息.
 * 使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面，Dapp端可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以实现将交易结果发送到交易查询服务器。
+
+***注意:*** NebPay并不关心使用的是什么网络(主网/测试网/本地网络), 只是把交易信息发给插件或手机App, 由后者决定使用哪个网络。
 
 #### 交易返回信息
 
