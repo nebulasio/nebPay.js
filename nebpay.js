@@ -47,7 +47,7 @@ NebPay.prototype = {
 		}
         var address = "";
         if (options.nrc20 && options.nrc20.address) {
-            address = options.nrc20.address
+            address = options.nrc20.address;
 		}
 
 		var args = [to, value];
@@ -78,7 +78,7 @@ NebPay.prototype = {
 		options = extend(defaultOptions, options);
 		return this._pay.submit(NAS, to, value, payload, options);
 	},
-    simulateCall: function (to, value, func, args, options) {
+    simulateCall: function (to, value, func, args, options) {	//this API will not be supported in the future
         var payload = {
             type: "simulateCall",
             function: func,

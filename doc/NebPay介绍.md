@@ -5,7 +5,7 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 
 ### 接口介绍
 
-目前NebPay 提供了以接口：
+目前NebPay 提供了以下接口：
  
 接口 | 简介 
 :--- | :---
@@ -13,7 +13,6 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 [nrc20pay](#nrc20pay)|用于NRC20代币的转账,仅接口实现，app不支持
 [deploy](#deploy)|用于部署智能合约，仅接口实现
 [call](#call)|用于调用智能合约
-[simulateCall](#simulatecall)|用于模拟运行智能合约的调用, 仅浏览器插件支持
 [queryPayInfo](#querypayinfo)|用于查询支付结果
 
 以上接口中，前四个api对应于[SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction)接口，细化了`SendTransaction`的使用场景。simulateCall 对应于RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call)接口，只用于和浏览器扩展的交互，移动端钱包app不支持该接口。
@@ -59,7 +58,7 @@ var defaultOptions = {
 		showQRCode: false,      //是否显示二维码信息
 		container: undefined    //指定显示二维码的canvas容器，不指定则生成一个默认canvas
 	},
-	// callback 是记录交易返回信息的交易查询服务器地址（目前是固定的地址，Dapp开发者暂时不能指定自己的交易查询服务器）
+	// callback 是记录交易返回信息的交易查询服务器地址，不指定则使用默认地址
 	callback: undefined,
 	// listener: 指定一个listener函数来处理交易返回信息（仅用于浏览器插件，App钱包不支持listener）
 	listener: undefined,
@@ -175,17 +174,6 @@ call(to, value, func, args, options)
 
 ***
 
-##### simulateCall
-模拟执行合约代码。**【仅chrome插件支持】**
-
-```
-simulateCall(to, value, func, args, options)
-```
-
-参数说明：
-
-simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call)接口。用来模拟执行合约调用，可以得到合约运行结果、预计gas消耗。主要用于调用合约中的查询函数，得到该函数的返回值。
-
 ##### queryPayInfo
 查询交易信息。
 
@@ -211,25 +199,55 @@ nebPay.queryPayInfo(serialNumber)
 
 #### 交易返回信息的处理
 浏览器插件和钱包app对交易返回信息有不同的处理方式。
-* 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号以获取交易信息.
+* 跳转钱包APP发送交易时，钱包App无法直接返回消息给Dapp页面，所以App会将交易信息发送到一个交易查询服务器。
+Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号以获取交易信息.
 * 使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面，Dapp端可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以实现将交易结果发送到交易查询服务器。
+
+***注意:*** NebPay并不关心使用的是什么网络(主网/测试网/本地网络), 只是把交易信息发给插件或手机App, 由后者决定使用哪个网络。
 
 #### 交易返回信息
 
- `pay`, `nrc20pay`, `deploy`, `call`的返回信息为交易信息:
+`queryPayInfo` 查询到的交易返回信息为JSON字符串, 反序列化得到的js 对象。其格式为：
+```json
+//查询失败
+{
+    "code": 1,  
+    "data": {},
+    "msg": "payId ZBTSkk74dB4tPJI9J8FDFMu270h7yaut get transaction error"
+},
+//查询成功
+{
+    "code": 0,
+    "data": {
+        "data": null,
+        "contractAddress": "",
+        "type": "binary",
+        "nonce": 136,
+        "gasLimit": "30000",
+        "gasUsed": "20000",
+        "chainId": 1001,
+        "from": "n1JmhE82GNjdZPNZr6dgUuSfzy2WRwmD9zy",
+        "to": "n1JmhE82GNjdZPNZr6dgUuSfzy2WRwmD9zy",
+        "value": "1000000000000000000",
+        "hash": "f9549a5c01f50f372607b9fd29bf15d483246578f6cc7008d6e2a537920802e6",
+        "gasPrice": "1000000",
+        "status": 1,
+        "timestamp": 1525508076
+    },
+    "msg": "success"
+}
+```
+
+ 对于浏览器插件，如果指定了`listener`函数，发送交易后将返回`txhash`给`listener`处理，返回的`txhash`信息格式为：
  
 ```json
 {
 "txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
-...
 }
 ```
 
-`simulateCall`的返回信息格式为:
 
-```json
-{"result":"null","execute_err":"","estimate_gas":"20168"}
-```
+
 
 ### 提示
-在开发Dapp页面时，如果不想使用NebPay，也可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。
+在开发Dapp页面时，如果不想使用NebPay，或者需要处理交易之外的其他消息，则可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。

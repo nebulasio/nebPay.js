@@ -32,9 +32,16 @@ The use of nebpay can be used as examples:
 
 * [example](examples/example.html) 
 
+An implementation of chrome extension contributed by community is:
+* [WebExtensionWallet](https://github.com/ChengOrangeJu/WebExtensionWallet)
+
 ## Documention
 
 All NebPay SDK documents are in folder [doc](/doc).
+
+And also there is a blog tutorial:
+* [How to use NebPay in your Dapp](https://medium.com/nebulasio/how-to-use-nebpay-in-your-dapp-8e785e560fbb)
+* [如何在Dapp中使用NebPay SDK](https://blog.csdn.net/ycyzyp/article/details/80261142)
 
 ## Wiki
 
