@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "copyright": "Copyright © 2017-2018 Nebulas.io",
   "description": "Nebulas JavaScript PAY SDK",
-  "main": "./dist/nebPay.js",
+  "main": "./dist/nebpay.js",
   "scripts": {
-    "npm-build": "parcel ./nebpay.js",
+    "npm-build": "parcel build ./nebpay.js",
     "build": "gulp",
     "watch": "gulp watch",
     "lint": "jshint *.js lib",
