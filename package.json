@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "copyright": "Copyright © 2017-2018 Nebulas.io",
   "description": "Nebulas JavaScript PAY SDK",
-  "main": "index.js",
+  "main": "nebpay.js",
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
