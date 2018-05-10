@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "copyright": "Copyright © 2017-2018 Nebulas.io",
   "description": "Nebulas JavaScript PAY SDK",
-  "main": "index.js",
+  "main": "./dist/nebpay.js",
   "scripts": {
+    "npm-build": "parcel build ./nebpay.js",
     "build": "gulp",
     "watch": "gulp watch",
     "lint": "jshint *.js lib",
@@ -15,7 +16,8 @@
   "keywords": [
     "neb",
     "javascript",
-    "pay"
+    "pay",
+    "nebpay"
   ],
   "directories": {
     "lib": "./libs"
@@ -51,6 +53,7 @@
     "jshint": ">=2.5.0",
     "mocha": ">=2.3.3",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "parcel-bundler": "^1.7.1"
   }
 }
