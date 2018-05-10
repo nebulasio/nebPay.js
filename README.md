@@ -35,6 +35,10 @@ The use of nebpay can be used as examples:
 An implementation of chrome extension contributed by community is:
 * [WebExtensionWallet](https://github.com/ChengOrangeJu/WebExtensionWallet)
 
+The parameter [`options.callback`](/doc/NebPay_Introduction.md#options) is used for querying transaction result. And it's testnet by default if you don't specify it. 
+* mainnet: "https://pay.nebulas.io/api/mainnet/pay"
+* testnet: "https://pay.nebulas.io/api/pay" (default value)
+
 ## Documention
 
 All NebPay SDK documents are in folder [doc](/doc).
