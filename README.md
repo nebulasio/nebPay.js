@@ -29,7 +29,7 @@ Here you should see a bunch of js files.
 
 `nebPay.js` is a useful library for Nebulas DApp developers. It provides rich underlying support in web's DApp. It implements the payment functions.
 
-The use of nebPay can be used as examples:
+For the usage of nebPay please refer to this example:
 
 * [example](examples/example.html) 
 
