@@ -1,59 +1,39 @@
 {
   "name": "nebpay",
-  "version": "0.0.1",
-  "copyright": "Copyright © 2017-2018 Nebulas.io",
-  "description": "Nebulas JavaScript PAY SDK",
-  "main": "nebpay.js",
+  "version": "0.0.5",
+  "description": "",
+  "main": "lib/nebPay.js",
+  "minified:main": "lib/nebPay.min.js",
+  "amdName": "nebPay.js",
   "scripts": {
-    "npm-build": "parcel build ./nebpay.js",
-    "build": "gulp",
-    "watch": "gulp watch",
-    "lint": "jshint *.js lib",
-    "test": "mocha; jshint *.js lib"
+    "build": "npm-run-all clean transpile minify",
+    "clean": "rm -rf lib/",
+    "minify": "uglifyjs $npm_package_main -cm -o $npm_package_minified_main",
+    "transpile": "rollup -c rollup.config.js -n $npm_package_amdName -o $npm_package_main"
   },
-  "author": "nebulas",
-  "license": "LGPL-3.0",
-  "keywords": [
-    "neb",
-    "javascript",
-    "pay",
-    "nebpay"
-  ],
-  "directories": {
-    "lib": "./libs"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1xuanyuan1/nebPay.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1xuanyuan1/nebPay.git/issues"
+  },
+  "homepage": "https://github.com/1xuanyuan1/nebPay.git#readme",
   "dependencies": {
-    "qrcode": "^1.2.0",
+    "bignumber.js": "^5.0.0",
     "extend": ">=3.0.1",
-    "bignumber.js": "^5.0.0"
+    "qrcode": "^1.2.0"
   },
   "devDependencies": {
-    "assert": "*",
-    "babel-plugin-transform-es3-member-expression-literals": "6.22.0",
-    "babel-plugin-transform-es3-property-literals": "6.22.0",
-    "babel-plugin-transform-object-rest-spread": "6.23.0",
+    "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babelify": "^7.3.0",
-    "browserify": ">=10.0",
-    "chai": "^3.0.0",
-    "coveralls": "^2.11.2",
-    "del": ">=2.0.2",
-    "exorcist": "^0.4.0",
-    "gulp": ">=3.9.0",
-    "gulp-jshint": ">=1.5.0",
-    "gulp-notify": "^3.0.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": ">=1.2.0",
-    "gulp-replace": "^0.5.3",
-    "gulp-streamify": "0.0.5",
-    "gulp-uglify": ">=1.2.0",
-    "gulp-jsdoc3": "^1.0.1",
-    "istanbul": "^0.4.4",
-    "jshint": ">=2.5.0",
-    "mocha": ">=2.3.3",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "parcel-bundler": "^1.7.1"
+    "babel-preset-stage-2": "^6.24.1",
+    "npm-run-all": "^4.1.3",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "uglify-js": "^2.7.5"
   }
 }

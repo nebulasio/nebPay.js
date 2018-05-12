@@ -1,6 +1,6 @@
 "use strict";
 
-var QRCode = require('qrcode');
+import QRCode from 'qrcode'
 
 var addCssRule = function() {
     function createStyleSheet() {
@@ -9,9 +9,9 @@ var addCssRule = function() {
         document.head.appendChild(style);
         return style.sheet;
     }
-  
+
     var sheet = createStyleSheet();
-  
+
     return function(selector, rules, index) {
         index = index || 0;
         sheet.insertRule(selector + "{" + rules + "}", index);
@@ -74,6 +74,6 @@ var showQRCode = function (content, container) {
 	  });
 };
 
-module.exports = {
-	showQRCode: showQRCode
-};
+export default {
+	showQRCode
+}

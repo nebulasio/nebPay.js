@@ -1,11 +1,11 @@
 "use strict";
 
-var extend = require('extend');
-var http = require("./libs/http");
-var config = require("./libs/config");
-var Pay = require("./libs/pay");
+import extend from 'extend';
+import http from "./libs/http";
+import config from "./libs/config";
+import Pay from "./libs/pay";
 
-var BigNumber = require("bignumber.js");
+import BigNumber from "bignumber.js";
 
 var NAS = "NAS";
 
@@ -93,5 +93,4 @@ NebPay.prototype = {
 	}
 };
 
-module.exports = NebPay;
-
+export default NebPay;

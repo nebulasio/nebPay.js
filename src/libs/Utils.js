@@ -6,7 +6,7 @@ var isChrome = function() {
         if (userAgent.match(/chrome\/([\d\.]+)/))  {
             return true;
         }
-    } 
+    }
     return false;
 };
 
@@ -23,7 +23,7 @@ var randomCode = function (len) {
         return c;
 };
 
-module.exports = {
+export default {
     isChrome: isChrome,
     randomCode: randomCode
 };
