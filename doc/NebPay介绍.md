@@ -238,7 +238,7 @@ Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使�
 }
 ```
 
- 对于浏览器插件，如果指定了`listener`函数，发送交易后将返回`txhash`给`listener`处理，返回的`txhash`信息格式为：
+ 对于浏览器插件，如果指定了`listener`函数，发送交易后将返回`txhash`给`listener`处理，返回的`txhash`信息是一个JSON对象，其格式为：
  
 ```json
 {

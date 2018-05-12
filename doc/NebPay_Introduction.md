@@ -228,7 +228,7 @@ The tx result queried by  `queryPayInfo` is a JSON string, the format of this JS
 }
 ```
 
-For browser, if you specified a `listener` function, then a `tahash` will be returned. The format of
+For browser, if you specified a `listener` function, then a `tahash` will be returned， which is a JSON Object. The format of
 `tahash` are like this:
 ```json
 {"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
