@@ -1,12 +1,11 @@
 "use strict";
 
-var BigNumber = require("bignumber.js");
-
-var Utils = require("./Utils");
-var QRCode = require("./qrcode");
+import BigNumber from "bignumber.js"
+import Utils from "./Utils"
+import QRCode from "./qrcode"
 //var Config = require("./config");
 
-var openExtension = require("./extensionUtils.js");
+import openExtension from "./extensionUtils.js"
 
 var Pay = function (appKey, appSecret) {
 	// TODO: currently not use
@@ -35,7 +34,7 @@ Pay.prototype = {
 
 		openExtension(params);
 		openApp(params, options);
-		
+
 		return options.serialNumber;
 	}
 };
@@ -68,4 +67,4 @@ function showQRCode(params, options) {
 	QRCode.showQRCode(params, options.qrcode.container);
 }
 
-module.exports = Pay;
+export default Pay;

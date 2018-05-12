@@ -39,8 +39,8 @@ var request = function(obj) {
     });
 };
 
-module.exports = {
-    get: get,
-    post: post,
-    request: request
-};
+export default {
+  get,
+  post,
+  request
+}

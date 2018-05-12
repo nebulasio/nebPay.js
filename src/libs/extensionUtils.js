@@ -35,4 +35,4 @@ window.addEventListener('message', function(resp) {
 });
 
 
-module.exports = openExtension;
+export default openExtension
