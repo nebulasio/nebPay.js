@@ -41,6 +41,7 @@
     "del": ">=2.0.2",
     "exorcist": "^0.4.0",
     "gulp": ">=3.9.0",
+    "gulp-jsdoc3": "^1.0.1",
     "gulp-jshint": ">=1.5.0",
     "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
@@ -48,12 +49,11 @@
     "gulp-replace": "^0.5.3",
     "gulp-streamify": "0.0.5",
     "gulp-uglify": ">=1.2.0",
-    "gulp-jsdoc3": "^1.0.1",
     "istanbul": "^0.4.4",
     "jshint": ">=2.5.0",
     "mocha": ">=2.3.3",
+    "parcel-bundler": "^1.7.1",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "parcel-bundler": "^1.7.1"
+    "vinyl-source-stream": "^1.1.0"
   }
 }

@@ -76,7 +76,7 @@ gulp.task('clean', ['lint'], function(cb) {
 gulp.task('nebpay', ['clean'], function () {
     return browserify()
         .require('./nebpay.js', {expose: 'nebpay'})
-        .transform(babelify)
+        .transform('babelify', {presets: ['es2015']})
         .bundle()
         .pipe(plumber({ errorHandler: onError }))
         // .pipe(exorcist(path.join( DEST, nebulasDst + '.js.map')))
