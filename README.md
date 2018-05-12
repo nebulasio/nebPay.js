@@ -1,18 +1,18 @@
 # nebPay
 
 
-This is the Nebulas payment JavaScript API. Users can use it in browser on both PC and mobile. Users can do NAS payment through chrome extension and iOS/Android wallet with it. [nebPay](https://github.com/nebulasio/nebPay)
+This is the Nebulas payment JavaScript API. Users can use it in browser on both PC and mobile. Users can do NAS payment through Chrome extension and iOS/Android wallet with it. [nebPay](https://github.com/nebulasio/nebPay)
 
 
 ## Install && Package
 
-Use the `npm` installation dependencies
+Use `npm` to install dependencies:
 
 ```
 npm install
 ```
 
-Use `gulp` to package the neb.js:
+Use `gulp` to package the nebPay:
 
 ```
 gulp
@@ -26,26 +26,29 @@ Here you should see a bunch of js files.
 
 
 ## Usage
-`nebPay.js ` is a useful library for nebulas dapp developers. It provides rich underlying support in web's dapp. It implements the payment functions.
 
-The use of nebpay can be used as examples:
+`nebPay.js` is a useful library for Nebulas DApp developers. It provides rich underlying support in web's DApp. It implements the payment functions.
+
+The use of nebPay can be used as examples:
 
 * [example](examples/example.html) 
 
 An implementation of chrome extension contributed by community is:
+
 * [WebExtensionWallet](https://github.com/ChengOrangeJu/WebExtensionWallet)
 
 The parameter [`options.callback`](/doc/NebPay_Introduction.md#options) is used for querying transaction result. And it's testnet by default if you don't specify it. 
 * mainnet: "https://pay.nebulas.io/api/mainnet/pay"
 * testnet: "https://pay.nebulas.io/api/pay" (default value)
 
-## Documention
+## Documentation
 
 All NebPay SDK documents are in folder [doc](/doc).
 
 And also there is a blog tutorial:
-* [How to use NebPay in your Dapp](https://medium.com/nebulasio/how-to-use-nebpay-in-your-dapp-8e785e560fbb)
-* [如何在Dapp中使用NebPay SDK](https://blog.csdn.net/ycyzyp/article/details/80261142)
+
+* [How to use NebPay in your DApp](https://medium.com/nebulasio/how-to-use-nebpay-in-your-dapp-8e785e560fbb)
+* [如何在 DApp 中使用 NebPay SDK](https://blog.csdn.net/ycyzyp/article/details/80261142)
 
 ## Wiki
 
