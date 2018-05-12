@@ -1,6 +1,7 @@
 ## NebPay SDK
 
 ### 简介
+
 NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在Dapp页面中使用NebPay API可以通过浏览器插件钱包、手机app钱包等实现交易支付和合约调用。
 
 ### 接口介绍
@@ -10,7 +11,7 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 接口 | 简介 
 :--- | :---
 [pay](#pay)| 用于账户间的NAS转账
-[nrc20pay](#nrc20pay)|用于NRC20代币的转账,仅接口实现，app不支持
+[nrc20pay](#nrc20pay)|用于NRC20代币的转账，仅接口实现，app不支持
 [deploy](#deploy)|用于部署智能合约，仅接口实现
 [call](#call)|用于调用智能合约
 [queryPayInfo](#querypayinfo)|用于查询支付结果
@@ -46,6 +47,7 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 ##### options
 
 每个接口都有一个共同的参数`options`，该参数的详细介绍如下:
+
 ```js
 var defaultOptions = {
 	goods: {        //Dapp端对当前交易商品的描述信息，app暂时不展示
@@ -112,9 +114,9 @@ options = {
     //nrc20参数介绍
     nrc20: {  
         address: "", //NRC20 代币的合约地址
-        decimals: 0,    //代币小数点位数, 决定了呆逼的最小单位
-        name: "",    //代币全程, 比如"Nebulas Token"
-        symbol: ""  //代币简称, 比如"NAS","EOS"
+        decimals: 0,    //代币小数点位数, 决定了代币的最小单位
+        name: "",    //代币全称, 比如 "Nebulas Token"
+        symbol: ""  //代币简称, 比如 "NAS", "EOS"
     }
 }
 ```
@@ -208,6 +210,7 @@ Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使�
 #### 交易返回信息
 
 `queryPayInfo` 查询到的交易返回信息为JSON字符串, 反序列化得到的js 对象。其格式为：
+
 ```json
 //查询失败
 {
@@ -245,9 +248,6 @@ Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使�
 "txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
 }
 ```
-
-
-
 
 ### 提示
 在开发Dapp页面时，如果不想使用NebPay，或者需要处理交易之外的其他消息，则可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。
