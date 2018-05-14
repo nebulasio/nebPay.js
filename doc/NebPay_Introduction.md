@@ -35,7 +35,8 @@ Here is an example of using NebPay in you Dapp. Please refer to `examples/exampl
     var options = {
         goods: {        //commodity description
             name: "example"
-        },        
+        },
+        callback: NebPay.config.testnetUrl,   //tx result query server address
         listener: undefined //specify a listener function for browser extension, which will handle the tx result
     }
     serialNumber = nebPay.pay(to, value, options); //a serialNumber will be returned when calling the NebPay API, then you can query the tx result with this SerialNumber
@@ -49,7 +50,7 @@ Here is an example of using NebPay in you Dapp. Please refer to `examples/exampl
 Every NebPay API has a common parameter `options`. And here is a detailed introduction of it.
 
 ```js
-var defaultOptions = {
+var options = {
 	goods: {        //Description of this commodity being  traded
 		name: "",       //name of commodity
 		desc: "",       //description
@@ -61,9 +62,13 @@ var defaultOptions = {
 		container: undefined    //Specifies the canvas container that displays the QR code. 
 	},
 	// callback is the server address that records tx results (the results is uploaded by wallet App)
-	callback: undefined,
+	// we provided tx results query server for testnet and mainnet, 
+	//callback: NebPay.config.mainnetUrl,     //tx result query server for mainnet
+	callback: NebPay.config.testnetUrl, //tx result query server for testnet
+	
 	// listener： specify a listener function to handle payment feedback message（just used by browser extension，App wallet doesn't support listener）
 	listener: undefined,
+	
 	// if use nrc20pay API, you need to specify nrc20 params like name, address, symbol, decimals
 	nrc20: undefined
 };
@@ -169,15 +174,16 @@ deploy(source, sourceType, args, options)
 ##### queryPayInfo
 
 ```
-queryPayInfo(serialNumber)
+queryPayInfo(serialNumber, options)
 ```
 
 ###### parameters：
 
 - `serialNumber` SerialNumber of this transaction, it's a random number of 32 bytes. After sending a transaction with the interface described above, a serial number of the transaction will be returned. Wallet App will uploaded the tx result to a tx query server, and you can use `queryPayInfo(serialNumber)` to query the tx result.
+- `options` which specifies the query server to query results.
 
 ###### return
-The return value of `queryPayInfo` is a `Promise`. You can handle the result as follows:
+The return value of `queryPayInfo` is a `Promise` object. You can handle the result as follows:
 
 ```js
 nebPay.queryPayInfo(serialNumber)

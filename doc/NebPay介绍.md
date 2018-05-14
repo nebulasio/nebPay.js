@@ -31,14 +31,17 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 <script >
     var NebPay = require("nebpay");
     var nebPay = new NebPay();    
-    var serialNumber;
+    var serialNumber;     //交易序列号
     var options = {
         goods: {        //商品描述
             name: "example"
-        },        
+        },
+        callback: NebPay.config.testnetUrl,   //交易查询服务器地址
         listener: undefined //为浏览器插件指定listener,处理交易返回结果
-    }
+    };
     serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32字节的交易序列号，Dapp端用该序列号查询交易结果
+    queryPayInfo(serialNumber,{callback: NebPay.config.testnetUrl})
+    
 </script>
 ```
 
@@ -49,7 +52,7 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 每个接口都有一个共同的参数`options`，该参数的详细介绍如下:
 
 ```js
-var defaultOptions = {
+var options = {
 	goods: {        //Dapp端对当前交易商品的描述信息，app暂时不展示
 		name: "",       //商品名称
 		desc: "",       //描述信息
@@ -60,8 +63,12 @@ var defaultOptions = {
 		showQRCode: false,      //是否显示二维码信息
 		container: undefined    //指定显示二维码的canvas容器，不指定则生成一个默认canvas
 	},
-	// callback 是记录交易返回信息的交易查询服务器地址，不指定则使用默认地址
-	callback: undefined,
+	
+	// callback 是记录交易返回信息的交易查询服务器地址，
+	// 目前我们提供了主网和测试网交易查询服务器, 
+	//callback: NebPay.config.mainnetUrl,     //主网(默认为主网,可不写)
+	callback: NebPay.config.testnetUrl, //测试网
+	
 	// listener: 指定一个listener函数来处理交易返回信息（仅用于浏览器插件，App钱包不支持listener）
 	listener: undefined,
 	// if use nrc20pay ,should input nrc20 params like name, address, symbol, decimals
@@ -180,14 +187,16 @@ call(to, value, func, args, options)
 查询交易信息。
 
 ```
-queryPayInfo(serialNumber)
+queryPayInfo(serialNumber,options)
 ```
 
 ###### 参数说明：
 
 - `serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32字节随机数。钱包App会将交易结果会上传到交易查询服务器，Dapp端用 `queryPayInfo(serialNumber)` 来查询交易结果信息。
+- `options` 对于`queryPayInfo`接口, options 主要用来指定交易查询服务器.
 
-- 返回值: `queryPayInfo`会返回一个`Promise`.
+###### 返回值:
+ `queryPayInfo`会返回一个`Promise`对象.
 
 ```js
 nebPay.queryPayInfo(serialNumber)
