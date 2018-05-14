@@ -238,9 +238,10 @@ For browser, if you specified a `listener` function, then a `tahash` will be ret
 `tahash` are like this:
 ```json
 {"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
-...
 }
 ```
+### The transaction process using NebPay is as folows:
+![](flow_chart.png)
 
 ### More info
 If you don't like to use NebPay while developing your Dapp page, you can also use [neb.js](https://github.com/nebulasio/neb.js) to get access to Nebulas blockchain directly.

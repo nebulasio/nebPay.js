@@ -258,5 +258,8 @@ Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使�
 }
 ```
 
+###使用NebPay的交易处理流程如下:
+![](flow_chart.png)
+
 ### 提示
 在开发Dapp页面时，如果不想使用NebPay，或者需要处理交易之外的其他消息，则可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。
