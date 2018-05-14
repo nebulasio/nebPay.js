@@ -40,7 +40,7 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
         listener: undefined //为浏览器插件指定listener,处理交易返回结果
     };
     serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32字节的交易序列号，Dapp端用该序列号查询交易结果
-    queryPayInfo(serialNumber,{callback: NebPay.config.testnetUrl})
+    queryPayInfo(serialNumber, options) //options 指定交易查询服务器地址.
     
 </script>
 ```
@@ -215,6 +215,7 @@ Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使�
 * 使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面，Dapp端可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以实现将交易结果发送到交易查询服务器。
 
 ***注意:*** NebPay并不关心使用的是什么网络(主网/测试网/本地网络), 只是把交易信息发给插件或手机App, 由后者决定使用哪个网络。
+NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉钱包App将发送交易后的(serialNumber,txHash)注册到哪个服务器以供查询, 并不能决定交易发送到主网还是测试网。
 
 #### 交易返回信息
 
