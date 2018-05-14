@@ -260,6 +260,7 @@ NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉�
 ```
 
 ###使用NebPay的交易处理流程如下:
+
 ![](flow_chart.png)
 
 ### 提示
