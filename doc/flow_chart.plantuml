@@ -1,0 +1,11 @@
+@startuml
+participant "Dapp\n(NebPay)" as NebPay
+participant "Wallet App" as App
+
+NebPay -> App: serialNumber = nebpay.pay( )
+App -> Server: save (serialNumber,txhash) to server
+...
+|||
+NebPay --> Server: queryPayInfo(serialNumber,options)
+NebPay <-- Server: \t\t\t\t\t\t\t return PayInfo
+@enduml 

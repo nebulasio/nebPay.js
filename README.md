@@ -37,9 +37,12 @@ An implementation of chrome extension contributed by community is:
 
 * [WebExtensionWallet](https://github.com/ChengOrangeJu/WebExtensionWallet)
 
-The parameter [`options.callback`](/doc/NebPay_Introduction.md#options) is used for querying transaction result. And it's testnet by default if you don't specify it. 
-* mainnet: "https://pay.nebulas.io/api/mainnet/pay"
-* testnet: "https://pay.nebulas.io/api/pay" (default value)
+The parameter [`options.callback`](/doc/NebPay_Introduction.md#options) is used for querying transaction result. And it's mainnet by default if you don't specify it. 
+* to select mainnet: `callback : NebPay.config.mainnetUrl` (default value)
+* to select testnet: `callback : NebPay.config.testnetUrl` 
+
+## The process of a transaction using NebPay
+![](doc/flow_chart.png)
 
 ## Documentation
 

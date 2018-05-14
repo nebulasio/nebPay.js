@@ -13,6 +13,8 @@ var NebPay = function (appKey, appSecret) {
 	this._pay = new Pay(appKey, appSecret);
 };
 
+NebPay.config = config;
+
 var defaultOptions = {
 	goods: {
 		name: "",
@@ -24,10 +26,14 @@ var defaultOptions = {
 		showQRCode: false,
 		container: undefined
 	},
+
 	// callback is the return url after payment
-	callback: config.payUrl,
+	//callback: config.payUrl,
+	callback: config.mainnetUrl,
+
 	//listener：specify a listener function to handle payment feedback message(only valid for browser extension)
 	listener: undefined,
+
 	// if use nrc20pay ,should input nrc20 params like address, name, symbol, decimals
 	nrc20: undefined
 };
@@ -85,10 +91,13 @@ NebPay.prototype = {
             args: args
         };
         options = extend(defaultOptions, options);
+
         return this._pay.submit(NAS, to, value, payload, options);
 	},
-	queryPayInfo: function(serialNumber) {
-		var url = config.payUrl + "/query?payId=" + serialNumber;
+	queryPayInfo: function(serialNumber, options) {
+		//var url = config.payUrl + "/query?payId=" + serialNumber;
+        options = extend(defaultOptions, options);
+        var url = options.callback + "/query?payId=" + serialNumber;
 		return http.get(url);
 	}
 };
