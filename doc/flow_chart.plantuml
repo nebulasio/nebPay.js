@@ -1,11 +1,17 @@
 @startuml
 participant "Dapp\n(NebPay)" as NebPay
 participant "Wallet App" as App
+participant Server as server
+participant "Nebulas\nBlockChain" as chain
 
 NebPay -> App: serialNumber = nebpay.pay( )
-App -> Server: save (serialNumber,txhash) to server
+App -> chain: send transaction
+App <- chain: return TxHash
+App -> server: save (serialNumber, TxHash) to server
 ...
 |||
-NebPay --> Server: queryPayInfo(serialNumber,options)
-NebPay <-- Server: \t\t\t\t\t\t\t return PayInfo
+NebPay --> server: queryPayInfo(serialNumber,options)
+server --> chain:  get tx receipt by TxHash
+server <-- chain: return tx receipt data
+NebPay <-- server: \t\t\t\t\t\t\t return PayInfo
 @enduml 
