@@ -243,5 +243,17 @@ For browser, if you specified a `listener` function, then a `tahash` will be ret
 ### The transaction process using NebPay is as folows:
 ![](flow_chart.png)
 
+### Example of Dapp using NebPay
+Here is a Dapp example Using NebPay: [SuperDictionary](https://yupnano.github.io/SuperDictionary/). It’s source code is on [GitHub](https://github.com/15010159959/super-dictionary).
+
+These videos blow explains the payment process of a Dapp using Nebpay both on PC and mobile phone.
+
+Youtube:
+- [Nebulas Dapp Using NebPay SDK on PC](https://youtu.be/FSFZqoUIT8A)
+- [Nebulas Dapp Using NebPay SDK on mobile](https://youtu.be/Cjlo9KKwlNE)
+
+Or this duplicated video on Chinese vedio website:
+- [[星云链]如何在Dapp中使用NebPay SDK ](https://www.bilibili.com/video/av23217213/)
+
 ### More info
 If you don't like to use NebPay while developing your Dapp page, you can also use [neb.js](https://github.com/nebulasio/neb.js) to get access to Nebulas blockchain directly.
