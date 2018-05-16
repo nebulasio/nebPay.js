@@ -263,5 +263,17 @@ NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉�
 
 ![](flow_chart.png)
 
+### NebPay 的使用效果示例
+这里有个使用nebPay的例子可以参考: [SuperDictionary](https://yupnano.github.io/SuperDictionary/) ，[GitHub链接](https://github.com/15010159959/super-dictionary)
+
+SuperDictionary 的使用过程可参见以下视频：
+
+Youtube:
+- [Nebulas Dapp Using NebPay SDK on PC](https://youtu.be/FSFZqoUIT8A)
+- [Nebulas Dapp Using NebPay SDK on mobile](https://youtu.be/Cjlo9KKwlNE)
+
+国内视频:
+- [[星云链]如何在Dapp中使用NebPay SDK ](https://www.bilibili.com/video/av23217213/)
+
 ### 提示
 在开发Dapp页面时，如果不想使用NebPay，或者需要处理交易之外的其他消息，则可以使用[neb.js](https://github.com/nebulasio/neb.js)直接访问星云链。
