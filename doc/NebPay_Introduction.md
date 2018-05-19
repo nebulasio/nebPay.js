@@ -15,20 +15,20 @@ API | Introduction
 [call](#call)|Call a smart contract function
 [queryPayInfo](#querypayinfo)|query a transaction result
 
-The first four APIs above are correspond to [SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction) API，and just refined the usage scenario of `SendTransaction`。
-simulateCall is correspond to [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call) API，which is only used for interactions with browser extension, and is not supported by mobile wallet App.
+The first four APIs above are correspond to [SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction) API, and just refined the usage scenario of `SendTransaction`.
+simulateCall is correspond to [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call) API, which is only used for interactions with browser extension, and is not supported by mobile wallet App.
 
 
 ### How to use NebPay
-While developing your Dapp, if you want to use NebPay SDK to handle transaction, you need to include `nebPay.js` into your Dapp page. And then you can use nebpay module to send transactions.
+While developing your Dapp, if you want to use NebPay SDK to handle transaction, you need to include `nebPay.js` into your Dapp page. And then you can use NebPay module to send transactions.
 
-When users using your Dapp whit desktop browsers (chrome), NebPay will call the browser plugin to process the transaction. And when your Dapp is used on mobile phone, nebPay will jump to the wallet App to process the transaction.
+When users using your Dapp whit desktop browsers (chrome), NebPay will call the browser plugin to process the transaction. And when your Dapp is used on mobile phone, NebPay will jump to the wallet App to process the transaction.
 
 Here is an example of using NebPay in you Dapp. Please refer to `examples/example.html` for more information.
 
 ```html
 <script src="../dist/nebPay.js"></script>
-<script >
+<script>
     var NebPay = require("nebpay");
     var nebPay = new NebPay();    
     var serialNumber;
@@ -66,7 +66,7 @@ var options = {
 	//callback: NebPay.config.mainnetUrl,     //tx result query server for mainnet
 	callback: NebPay.config.testnetUrl, //tx result query server for testnet
 	
-	// listener： specify a listener function to handle payment feedback message（just used by browser extension，App wallet doesn't support listener）
+	// listener： specify a listener function to handle payment feedback message（just used by browser extension, App wallet doesn't support listener）
 	listener: undefined,
 	
 	// if use nrc20pay API, you need to specify nrc20 params like name, address, symbol, decimals
@@ -107,7 +107,7 @@ var options = {
 
 - `to` Destination address, which is a Nebulas wallet address
 
-- `value` Transfer amount，The unit is this NRC20 token.
+- `value` Transfer amount, The unit is this NRC20 token.
 
 - `options` decimals and Token SmartContract address is required, while Token name and symbol is optional。
 
@@ -234,10 +234,11 @@ The tx result queried by  `queryPayInfo` is a JSON string, the format of this JS
 }
 ```
 
-For browser, if you specified a `listener` function, then a `tahash` will be returned， which is a JSON Object. The format of
-`tahash` are like this:
+For browser, if you specified a `listener` function, then a `txhash` will be returned, which is a JSON Object. The format of
+`txhash` are like this:
 ```json
-{"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
+{
+    "txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1", "contract_address":""
 }
 ```
 ### The transaction process using NebPay is as folows:
@@ -246,7 +247,7 @@ For browser, if you specified a `listener` function, then a `tahash` will be ret
 ### Example of Dapp using NebPay
 Here is a Dapp example Using NebPay: [SuperDictionary](https://yupnano.github.io/SuperDictionary/). It’s source code is on [GitHub](https://github.com/15010159959/super-dictionary).
 
-These videos blow explains the payment process of a Dapp using Nebpay both on PC and mobile phone.
+These videos blow explains the payment process of a Dapp using NebPay both on PC and mobile phone.
 
 Youtube:
 - [Nebulas Dapp Using NebPay SDK on PC](https://youtu.be/FSFZqoUIT8A)

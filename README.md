@@ -23,7 +23,7 @@ Now we can check the newly created files in `/dist`
 
 Here you should see a bunch of js files. 
 
- * `nebPay.js`:Used in brower side. Including outside dependency.
+ * `nebPay.js`: Used in browser side. Including outside dependency.
 
 
 ## Usage

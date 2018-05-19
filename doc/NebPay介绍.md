@@ -20,15 +20,15 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 
 
 ### 使用说明
-在开发Dapp时，如果要使用NebPay SDK来处理交易， 需要将`nebPay.js`插入到Dapp页面中， 然后就可以使用nebpay模块来发送交易了。
+在开发Dapp时，如果要使用NebPay SDK来处理交易， 需要将`nebPay.js`插入到Dapp页面中， 然后就可以使用NebPay模块来发送交易了。
 
-当用户在桌面浏览器（chrome）使用Dapp，nebPay会调用浏览器插件来处理交易。当在手机端使用Dapp，nebPay会跳转到钱包app来处理交易.
+当用户在桌面浏览器（chrome）使用Dapp，NebPay会调用浏览器插件来处理交易。当在手机端使用Dapp，NebPay会跳转到钱包app来处理交易.
 
 Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 
 ```html
 <script src="../dist/nebPay.js"></script>
-<script >
+<script>
     var NebPay = require("nebpay");
     var nebPay = new NebPay();    
     var serialNumber;     //交易序列号
@@ -255,7 +255,7 @@ NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉�
  
 ```json
 {
-"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""
+    "txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1", "contract_address":""
 }
 ```
 
