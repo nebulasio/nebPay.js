@@ -255,7 +255,8 @@ NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉�
  
 ```json
 {
-    "txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1", "contract_address":""
+    "txhash": "a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1",
+    "contract_address": ""
 }
 ```
 

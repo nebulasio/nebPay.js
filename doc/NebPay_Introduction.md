@@ -238,7 +238,8 @@ For browser, if you specified a `listener` function, then a `txhash` will be ret
 `txhash` are like this:
 ```json
 {
-    "txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1", "contract_address":""
+    "txhash": "a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1",
+    "contract_address": ""
 }
 ```
 ### The transaction process using NebPay is as folows:
