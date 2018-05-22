@@ -1,5 +1,7 @@
 # nebPay
 
+[![](https://data.jsdelivr.com/v1/package/npm/nebpay.js/badge)](https://www.jsdelivr.com/package/npm/nebpay.js)
+
 [![NPM](https://nodei.co/npm/nebpay.js.png)](https://nodei.co/npm/nebpay.js/)
 
 This is the Nebulas payment JavaScript API. Users can use it in browser on both PC and mobile. Users can do NAS payment through Chrome extension and iOS/Android wallet with it. [nebPay](https://github.com/nebulasio/nebPay)
