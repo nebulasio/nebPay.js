@@ -83,6 +83,9 @@ gulp.task('nebpay', ['clean'], function () {
         .pipe(source('nebPay.js'))
         .pipe(buffer())
         .pipe(rename(dst + '.js'))
+        .pipe(gulp.dest(DEST))
+        .pipe(uglify())
+        .pipe(rename(dst + '.min.js'))
         .pipe(gulp.dest(DEST));
 });
 
