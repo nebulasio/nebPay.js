@@ -33,7 +33,7 @@ var request = function(obj) {
                 reject(xhr.statusText);
             }
         };
-        xhr.onerror = function() { return reject(xhr.statusText); }
+        xhr.onerror = function() { return reject(xhr.statusText); };
         xhr.send(obj.body);
     });
 };

@@ -39,7 +39,9 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
         callback: NebPay.config.testnetUrl,   //交易查询服务器地址
         listener: undefined //为浏览器插件指定listener,处理交易返回结果
     };
+    
     serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32字节的交易序列号，Dapp端用该序列号查询交易结果
+    //一般用setInterval来定时查询直到查询到结果, 查询周期建议10-15s (因为查询服务器限制最多6次/分钟, nebulas出块周期为15s.)
     queryPayInfo(serialNumber, options) //options 指定交易查询服务器地址.
     
 </script>
@@ -65,7 +67,7 @@ var options = {
 	},
 	
 	// callback 是记录交易返回信息的交易查询服务器地址，
-	// 目前我们提供了主网和测试网交易查询服务器, 
+	// 目前我们提供了主网和测试网交易查询服务器, 查询频率不能超过6次/分钟
 	//callback: NebPay.config.mainnetUrl,     //主网(默认为主网,可不写)
 	callback: NebPay.config.testnetUrl, //测试网
 	
@@ -197,7 +199,7 @@ queryPayInfo(serialNumber,options)
 
 ###### 返回值:
  `queryPayInfo`会返回一个`Promise`对象.
-
+ 
 ```js
 nebPay.queryPayInfo(serialNumber)
   .then(function (resp) {
@@ -207,6 +209,7 @@ nebPay.queryPayInfo(serialNumber)
       console.log(err);
   });
 ```
+ **注意:** 我们提供的查询服务器有查询频率限制, 不得超过6次/分钟, 所以查询周期在10-15s为宜.
 
 #### 交易返回信息的处理
 浏览器插件和钱包app对交易返回信息有不同的处理方式。

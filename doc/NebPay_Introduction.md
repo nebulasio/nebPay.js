@@ -61,8 +61,9 @@ var options = {
 		showQRCode: false,      //Whether to display QR code information
 		container: undefined    //Specifies the canvas container that displays the QR code. 
 	},
+	
 	// callback is the server address that records tx results (the results is uploaded by wallet App)
-	// we provided tx results query server for testnet and mainnet, 
+	// we provided tx results query server for testnet and mainnet, and there is a limits to the query frequency.(should less than 6 times per minute)
 	//callback: NebPay.config.mainnetUrl,     //tx result query server for mainnet
 	callback: NebPay.config.testnetUrl, //tx result query server for testnet
 	
@@ -194,6 +195,7 @@ nebPay.queryPayInfo(serialNumber)
       console.log(err);
   });
 ```
+ **Note:** The query server we provided has limitations on the query frequency, which is 6 times per minute. We suggest that you should set the query period to 10~15s.
 
 #### Dealing with transaction results
 

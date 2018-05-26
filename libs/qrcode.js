@@ -26,6 +26,7 @@ var createDeaultQRContainer = function() {
 
 	var qrcontainer = document.createElement("div");
 	qrcontainer.className = "qrcode-container";
+    /*jshint multistr: true */ //to remove gulp error warning
   var style = ("text-align: center;\
     background-color: #fff0;\
     border-radius: 20px;\
