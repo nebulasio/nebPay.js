@@ -24,7 +24,14 @@ var defaultOptions = {
 	},
 	qrcode: {
 		showQRCode: false,
+		completeTip: undefined, // string of complete payment tip
+		cancelTip: undefined, // string of cancel payment tip
 		container: undefined
+	},
+
+	mobile: {
+		showInstallTip: true,
+		installTip: undefined // string of install NASNano tip
 	},
 
 	// callback is the return url after payment

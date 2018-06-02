@@ -27,7 +27,7 @@ window.addEventListener('message', function(resp) {
     var key = resp.data.serialNumber;
     var callback = callbackMap[key];
     if(typeof callback === "function"){
-        callback(resp.data.resp);
+        callback(key, resp.data.resp);
     }
 
     //delete callbackMap[key];

@@ -4,9 +4,9 @@ var BigNumber = require("bignumber.js");
 
 var Utils = require("./Utils");
 var QRCode = require("./qrcode");
-//var Config = require("./config");
 
-var openExtension = require("./extensionUtils.js");
+var openExtension = require("./extensionHandler");
+var openApp = require("./appHandler");
 
 var Pay = function (appKey, appSecret) {
 	// TODO: currently not use
@@ -33,39 +33,26 @@ Pay.prototype = {
 			nrc20: options.nrc20
 		};
 
-		openExtension(params);
-		openApp(params, options);
-		
-		return options.serialNumber;
-	}
-};
+		if (Utils.isChrome() && !Utils.isMobile()) {
+			openExtension(params);
+		}
 
-// function openExtension(params) {
-// 	// TODO: start chrom extension
-// 	if (typeof window !== "undefined") {
-// 		window.postMessage(params,"*");
-// 	}
-// }
-
-function openApp(params, options) {
-	// if (typeof window !== "undefined") {
-		//params.callback = Config.payUrl;
 		var appParams = {
 			category: "jump",
 			des: "confirmTransfer",
 			pageParams: params
 		};
-		var url = "openapp.NASnano://virtual?params=" + JSON.stringify(appParams);
-		window.location.href = url;
 
-		if (options.qrcode.showQRCode) {
-			showQRCode(JSON.stringify(appParams), options);
+		if (Utils.isMobile()) {
+			openApp(appParams, options);
 		}
-	// }
-}
 
-function showQRCode(params, options) {
-	QRCode.showQRCode(params, options.qrcode.container);
-}
+		if (options.qrcode.showQRCode && !Utils.isNano()) {
+			QRCode.showQRCode(JSON.stringify(appParams), options);
+		}
+		
+		return options.serialNumber;
+	}
+};
 
 module.exports = Pay;
