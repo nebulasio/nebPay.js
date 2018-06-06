@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/nebpay.js.png)](https://nodei.co/npm/nebpay.js/)
 
-This is the Nebulas payment JavaScript API. Users can use it in browser on both PC and mobile. Users can do NAS payment through Chrome extension and iOS/Android wallet with it. [nebPay](https://github.com/nebulasio/nebPay)
+This is the Nebulas payment JavaScript API. Users can use it in browser on both PC and mobile. Users can do NAS payment through [Chrome extension](https://chrome.google.com/webstore/detail/nasextwallet/gehjkhmhclgnkkhpfamakecfgakkfkco) and [iOS/Android wallet]((https://nano.nebulas.io/)) with it. [nebPay](https://github.com/nebulasio/nebPay)
 
 
 ## Install && Package
@@ -36,9 +36,11 @@ For the usage of nebPay please refer to this example:
 
 * [example](examples/example.html) 
 
+The App wallet is [Nas Nano](https://nano.nebulas.io/)
+
 An implementation of chrome extension contributed by community is:
 
-* [WebExtensionWallet](https://github.com/ChengOrangeJu/WebExtensionWallet)
+* [NasExtWallet](https://chrome.google.com/webstore/detail/nasextwallet/gehjkhmhclgnkkhpfamakecfgakkfkco)
 
 The parameter [`options.callback`](/doc/NebPay_Introduction.md#options) is used for querying transaction result. And it's mainnet by default if you don't specify it. 
 * to select mainnet: `callback : NebPay.config.mainnetUrl` (default value)
