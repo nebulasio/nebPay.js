@@ -33,7 +33,7 @@ Pay.prototype = {
 			nrc20: options.nrc20
 		};
 
-		if (Utils.isChrome() && !Utils.isMobile()) {
+		if (Utils.isChrome() && !Utils.isMobile() && options.extension.openExtension) {
 			openExtension(params);
 		}
 

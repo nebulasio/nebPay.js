@@ -28,6 +28,9 @@ var defaultOptions = {
 		cancelTip: undefined, // string of cancel payment tip
 		container: undefined
 	},
+	extension: {
+		openExtension: true //set if need show extension payment mode
+	},
 
 	mobile: {
 		showInstallTip: true,
