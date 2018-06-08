@@ -7,8 +7,7 @@
         var NebPay = require("nebpay");
         var nebPay = new NebPay();
         var serialNumber;
-        //var callbackUrl = NebPay.config.mainnetUrl;
-        var callbackUrl = NebPay.config.testnetUrl;
+        var enableDebug = false;
 
         function onPayClick() {
             var to = document.getElementById("to").value;
@@ -21,8 +20,8 @@
                     name: "test",
                     desc: "test goods"
                 },
-                callback:callbackUrl,
-                listener: listener  //set listener for extension transaction result
+                listener: listener,  //set listener for extension transaction result
+                debug: enableDebug
             });
             setTimeout(() => {
                 onrefreshClick();   //search transaction result from server (result upload to server by app)
@@ -46,7 +45,7 @@
                     symbol: "NRC",
                     decimals: 18
                 },
-                callback:callbackUrl,
+                debug: enableDebug
             });
             setTimeout(() => {
                 onrefreshClick();
@@ -81,8 +80,8 @@
                     name: "test",
                     desc: "test goods"
                 },
-                callback:callbackUrl,
-                listener: listener  //set listener for extension transaction result
+                listener: listener,  //set listener for extension transaction result
+                debug: enableDebug
             });
             setTimeout(() => {
                 onrefreshClick();
@@ -109,7 +108,7 @@
         }
 
         function onrefreshClick() {
-            nebPay.queryPayInfo(serialNumber,{callback: callbackUrl})   //search transaction result from server (result upload to server by app)
+            nebPay.queryPayInfo(serialNumber,{debug: enableDebug})   //search transaction result from server (result upload to server by app)
             .then(function (resp) {
                 document.getElementById('result').value = resp;
             })
@@ -124,12 +123,10 @@
         }
 
         function selectMainnet () {
-            callbackUrl = NebPay.config.mainnetUrl;
-            console.log("Mainnet selected: " + callbackUrl)
+            enableDebug = false;
         }
         function selectTestnet () {
-            callbackUrl = NebPay.config.testnetUrl;
-            console.log("Testnet selected: " + callbackUrl)
+            enableDebug = true;
         }
     </script>
     <style>

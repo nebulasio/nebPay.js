@@ -1,9 +1,11 @@
 "use strict";
 
+var config = require("./config");
 var Utils = require("./Utils");
 
 function openApp(appParams, options) {
-    var url = "openapp.NASnano://virtual?params=" + JSON.stringify(appParams);
+    var url = config.nanoScheme(options.debug);
+    url = url + "://virtual?params=" + JSON.stringify(appParams);
     // window.location.href = url;
     var ifr = document.createElement('iframe');
     ifr.src = url;
