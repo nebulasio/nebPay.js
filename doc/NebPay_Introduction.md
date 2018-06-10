@@ -170,6 +170,10 @@ deploy(source, sourceType, args, options)
 
 `options` Refer to `options` parameter description
 
+###### return
+
+- `serialNumber` transaction's serival number, used for query transaction info.
+
 ***
 
 ##### queryPayInfo
