@@ -6,10 +6,10 @@ var Utils = require("./Utils");
 function openApp(appParams, options) {
     var url = config.nanoScheme(options.debug);
     url = url + "://virtual?params=" + JSON.stringify(appParams);
-    // window.location.href = url;
-    var ifr = document.createElement('iframe');
-    ifr.src = url;
-    ifr.style.display='none';
+    window.location.href = url;
+    // var ifr = document.createElement('iframe');
+    // ifr.src = url;
+    // ifr.style.display='none';
 
     if (!Utils.isNano() && options.mobile.showInstallTip) {
         checkOpen(function(opened) {
@@ -19,10 +19,10 @@ function openApp(appParams, options) {
         });
     }
 
-    document.body.appendChild(ifr);      
-    setTimeout(function() {
-        document.body.removeChild(ifr);
-    }, 2000); 
+    // document.body.appendChild(ifr);      
+    // setTimeout(function() {
+    //     document.body.removeChild(ifr);
+    // }, 2000); 
 }
 
 //check app open

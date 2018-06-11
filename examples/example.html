@@ -7,7 +7,7 @@
         var NebPay = require("nebpay");
         var nebPay = new NebPay();
         var serialNumber;
-        var enableDebug = false;
+        var enableDebug = true;
 
         function onPayClick() {
             var to = document.getElementById("to").value;
@@ -147,7 +147,7 @@
     <label>Please select MainNet TeseNet to query tx result:</label>
     <br>
     <label><input onclick="selectMainnet();" type="radio" value="mainnetUrl" name="network">MainNet</label>
-    <label><input onclick="selectTestnet();" type="radio" value="testnetUrl" name="network">TestNet</label>
+    <label><input onclick="selectTestnet();" checked type="radio" value="testnetUrl" name="network">TestNet</label>
     <p >Note: You need to switch the network of wallet <a target="_blank" href="https://blog.nebulas.io/2018/05/10/announcement-of-official-app/">App</a> or <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">extension</a> accordingly.</p>
 </div>
 <h5></h5>
