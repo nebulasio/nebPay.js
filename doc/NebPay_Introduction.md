@@ -59,11 +59,20 @@ var options = {
 	},
 	qrcode: {
 		showQRCode: false,      //Whether to display QR code information
-		container: undefined    //Specifies the canvas container that displays the QR code. 
+		container: undefined,    //Specifies the canvas container that displays the QR code. 
+		completeTip: undefined, // string of complete payment tip
+		cancelTip: undefined // string of cancel payment tip
+	},
+	extension: {
+		openExtension: true //set if need show extension payment mode
+	},
+	mobile: {
+		showInstallTip: true,
+		installTip: undefined // string of install NASNano tip
 	},
 	
 	// callback is the server address that records tx results (the results is uploaded by wallet App)
-	// we provided tx results query server for testnet and mainnet, and there is a limits to the query frequency.(should less than 6 times per minute)
+	// we provided tx results query server for testnet and mainnet, and there is a limits to the query frequency.(should less than 20 times per minute)
 	//callback: NebPay.config.mainnetUrl,     //tx result query server for mainnet
 	callback: NebPay.config.testnetUrl, //tx result query server for testnet
 	
@@ -71,7 +80,10 @@ var options = {
 	listener: undefined,
 	
 	// if use nrc20pay API, you need to specify nrc20 params like name, address, symbol, decimals
-	nrc20: undefined
+	nrc20: undefined,
+	
+	// if debug mode, should open testnet nano and reset the callback
+	debug: false
 };
 ```
 ***

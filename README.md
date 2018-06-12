@@ -15,6 +15,9 @@ Use `npm` to install dependencies:
 npm install
 ```
 
+ **Notice:The official version of the package in NPMJS is `nebpay.js`, not `nebpay` and etc.**
+
+
 Use `gulp` to package the nebPay:
 
 ```
@@ -36,27 +39,45 @@ For the usage of nebPay please refer to this example:
 
 * [example](examples/example.html) 
 
-The App wallet is [Nas Nano](https://nano.nebulas.io/)
+### Wallet support
+
+#### iOS/Android wallet
+Nebpay supports evoking mobile wallets, allowing users to pay via their phones. **Mobile payment is safe and convenient. We recommend you to pay by mobile wallet.**
+
+* [Nas Nano](https://nano.nebulas.io/)
+
+***
+*Tips*:NAS Nano also provides a test version of the wallet for the Testnet, which only supports the use of the wallet in the Testnet for developers to test.
+
+- [iOS for Testnet](itms-services://?action=download-manifest&url=https://testnet.nebulas.io/static/wallet/ios/NASnano.plist)
+- [Android for Testnet](https://testnet.nebulas.io/static/wallet/android/nas-nano-Testnet-v1.2.2.apk)
+
+***
+
+#### Chrome extension wallet
 
 An implementation of chrome extension contributed by community is:
 
 * [NasExtWallet](https://chrome.google.com/webstore/detail/nasextwallet/gehjkhmhclgnkkhpfamakecfgakkfkco)
 
 The parameter [`options.callback`](/doc/NebPay_Introduction.md#options) is used for querying transaction result. And it's mainnet by default if you don't specify it. 
+
 * to select mainnet: `callback : NebPay.config.mainnetUrl` (default value)
 * to select testnet: `callback : NebPay.config.testnetUrl` 
 
-## The process of a transaction using NebPay
-![](doc/flow_chart.png)
-
 ## Documentation
 
-All NebPay SDK documents are in folder [doc](/doc).
+All NebPay SDK documents are in `doc` folder.
+
+* [doc](/doc)
 
 And also there is a blog tutorial:
 
 * [How to use NebPay in your DApp](https://medium.com/nebulasio/how-to-use-nebpay-in-your-dapp-8e785e560fbb)
 * [如何在 DApp 中使用 NebPay SDK](https://blog.csdn.net/ycyzyp/article/details/80261142)
+
+## The process of a transaction using NebPay
+![](doc/flow_chart.png)
 
 ## Wiki
 
