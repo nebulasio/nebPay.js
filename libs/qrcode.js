@@ -1,33 +1,18 @@
 "use strict";
 
 var QRCode = require('qrcode');
+var Utils = require("./Utils");
 
-var addCssRule = function() {
-    function createStyleSheet() {
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        document.head.appendChild(style);
-        return style.sheet;
-    }
-  
-    var sheet = createStyleSheet();
-  
-    return function(selector, rules, index) {
-        index = index || 0;
-        sheet.insertRule(selector + "{" + rules + "}", index);
-    };
-}();
-
-var createDeaultQRContainer = function() {
+var createDeaultQRContainer = function(options) {
 	var canvas = document.createElement("canvas");
 	canvas.className = "qrcode";
+	/*jshint multistr: true */
 	var canvasStyle = "box-shadow: 2px 2px 12px lightgray;";
-	addCssRule(".qrcode", canvasStyle);
+	Utils.addCssRule(".qrcode", canvasStyle);
 
 	var qrcontainer = document.createElement("div");
 	qrcontainer.className = "qrcode-container";
-    /*jshint multistr: true */ //to remove gulp error warning
-  var style = ("text-align: center;\
+	var style = ("text-align: center;\
     background-color: #fff0;\
     border-radius: 20px;\
     width: 300px;\
@@ -36,8 +21,37 @@ var createDeaultQRContainer = function() {
     left: 50%;\
     top: 50%;\
     transform: translate(-50%,-50%);");
-	addCssRule(".qrcode-container", style);
+	Utils.addCssRule(".qrcode-container", style);
 	qrcontainer.appendChild(canvas);
+
+	var completeBtn = document.createElement("BUTTON");
+	completeBtn.className = "complete";
+	completeBtn.innerHTML =  options.qrcode.completeTip || "COMPLETE/完成支付";
+	style = "background-color: #000;\
+	border-radius: 4px;\
+	width: 300px;\
+	height: 40px;\
+	// padding: 20px;\
+	margin-top: 20px;\
+	color: #fff;\
+	";
+	Utils.addCssRule(".complete", style);
+	qrcontainer.appendChild(completeBtn);
+
+	var cancelBtn = document.createElement("BUTTON");
+	cancelBtn.className = "cancel";
+	cancelBtn.innerHTML = options.qrcode.cancelTip || "CANCEL/取消支付";
+	style = "background-color: #666;\
+	border-radius: 4px;\
+	width: 300px;\
+	height: 40px;\
+	// padding: 20px;\
+	margin-top: 10px;\
+	margin-bottom: 20px;\
+	color: #fff;\
+	";
+	Utils.addCssRule(".cancel", style);
+	qrcontainer.appendChild(cancelBtn);
 
 	var background = document.createElement("div");
 	background.className = "qrcode-background";
@@ -48,25 +62,46 @@ var createDeaultQRContainer = function() {
 	height:100%;\
 	width:100%;\
 	background-color: rgba(0, 0, 0, 0.4);";
-	addCssRule(".qrcode-background", style);
+	Utils.addCssRule(".qrcode-background", style);
 	background.appendChild(qrcontainer);
 
-	var body = document.getElementsByTagName("body");
-	body[0].appendChild(background);
+	var bodys = document.getElementsByTagName("body");
+	var body = bodys[0];
+	body.appendChild(background);
 
 	background.onclick = function () {
-		body[0].removeChild(background);
+		if (background !== null) {
+			body.removeChild(background);
+			dismiss(false, options);
+		}
+	};
+	cancelBtn.onclick = function () {
+		body.removeChild(background);
+		background = null;
+		dismiss(false, options);
+	};
+	completeBtn.onclick = function () {
+		body.removeChild(background);
+		background = null;
+		dismiss(true, options);
 	};
 
 	return canvas;
 };
 
-var showQRCode = function (content, container) {
+var dismiss = function(complete, options) {
+	if (typeof options.listener !== "undefined") {
+		options.listener(options.serialNumber, complete);
+	}
+};
+
+var showQRCode = function (content, options) {
 	if (typeof window === "undefined") {
 		return;
 	}
+	var container = options.qrcode.container;
 	if (typeof container === "undefined") {
-		container = createDeaultQRContainer();
+		container = createDeaultQRContainer(options);
 	}
 	QRCode.toCanvas(container, content, function (error) {
 		if (error) {

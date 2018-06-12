@@ -23,19 +23,32 @@ var defaultOptions = {
 		ext: ""
 	},
 	qrcode: {
-		showQRCode: false,
+		showQRCode: true,
+		completeTip: undefined, // string of complete payment tip
+		cancelTip: undefined, // string of cancel payment tip
 		container: undefined
+	},
+	extension: {
+		openExtension: true //set if need show extension payment mode
+	},
+
+	mobile: {
+		showInstallTip: true,
+		installTip: undefined // string of install NASNano tip
 	},
 
 	// callback is the return url after payment
 	//callback: config.payUrl,
-	callback: config.mainnetUrl,
+	callback: undefined,
 
 	//listener：specify a listener function to handle payment feedback message(only valid for browser extension)
 	listener: undefined,
 
 	// if use nrc20pay ,should input nrc20 params like address, name, symbol, decimals
-	nrc20: undefined
+	nrc20: undefined,
+
+	// if debug mode, should open testnet nano and reset the callback
+	debug: false
 };
 
 NebPay.prototype = {
@@ -95,9 +108,9 @@ NebPay.prototype = {
         return this._pay.submit(NAS, to, value, payload, options);
 	},
 	queryPayInfo: function(serialNumber, options) {
-		//var url = config.payUrl + "/query?payId=" + serialNumber;
-        options = extend(defaultOptions, options);
-        var url = options.callback + "/query?payId=" + serialNumber;
+		options = extend(defaultOptions, options);
+		var url = options.callback || config.payUrl(options.debug);
+        url = url + "/query?payId=" + serialNumber;
 		return http.get(url);
 	}
 };

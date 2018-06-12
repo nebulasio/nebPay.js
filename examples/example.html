@@ -1,13 +1,13 @@
 <!doctype>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <script type="text/javascript" src="../dist/nebPay.js"></script>
     <script type="text/javascript">
         var NebPay = require("nebpay");
         var nebPay = new NebPay();
         var serialNumber;
-        //var callbackUrl = NebPay.config.mainnetUrl;
-        var callbackUrl = NebPay.config.testnetUrl;
+        var enableDebug = true;
 
         function onPayClick() {
             var to = document.getElementById("to").value;
@@ -20,8 +20,8 @@
                     name: "test",
                     desc: "test goods"
                 },
-                callback:callbackUrl,
-                listener: listener  //set listener for extension transaction result
+                listener: listener,  //set listener for extension transaction result
+                debug: enableDebug
             });
             setTimeout(() => {
                 onrefreshClick();   //search transaction result from server (result upload to server by app)
@@ -45,7 +45,7 @@
                     symbol: "NRC",
                     decimals: 18
                 },
-                callback:callbackUrl,
+                debug: enableDebug
             });
             setTimeout(() => {
                 onrefreshClick();
@@ -80,8 +80,8 @@
                     name: "test",
                     desc: "test goods"
                 },
-                callback:callbackUrl,
-                listener: listener  //set listener for extension transaction result
+                listener: listener,  //set listener for extension transaction result
+                debug: enableDebug
             });
             setTimeout(() => {
                 onrefreshClick();
@@ -108,7 +108,7 @@
         }
 
         function onrefreshClick() {
-            nebPay.queryPayInfo(serialNumber,{callback: callbackUrl})   //search transaction result from server (result upload to server by app)
+            nebPay.queryPayInfo(serialNumber,{debug: enableDebug})   //search transaction result from server (result upload to server by app)
             .then(function (resp) {
                 document.getElementById('result').value = resp;
             })
@@ -123,15 +123,17 @@
         }
 
         function selectMainnet () {
-            callbackUrl = NebPay.config.mainnetUrl;
-            console.log("Mainnet selected: " + callbackUrl)
+            enableDebug = false;
         }
         function selectTestnet () {
-            callbackUrl = NebPay.config.testnetUrl;
-            console.log("Testnet selected: " + callbackUrl)
+            enableDebug = true;
         }
     </script>
     <style>
+        body {
+            width: 100%;
+            height: 100%;
+        }
         textarea {
             width: 400px;
             height: 100px;
@@ -145,7 +147,7 @@
     <label>Please select MainNet TeseNet to query tx result:</label>
     <br>
     <label><input onclick="selectMainnet();" type="radio" value="mainnetUrl" name="network">MainNet</label>
-    <label><input onclick="selectTestnet();" type="radio" value="testnetUrl" name="network">TestNet</label>
+    <label><input onclick="selectTestnet();" checked type="radio" value="testnetUrl" name="network">TestNet</label>
     <p >Note: You need to switch the network of wallet <a target="_blank" href="https://blog.nebulas.io/2018/05/10/announcement-of-official-app/">App</a> or <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">extension</a> accordingly.</p>
 </div>
 <h5></h5>
