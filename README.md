@@ -30,6 +30,12 @@ Here you should see a bunch of js files.
 
  * `nebPay.js`: Used in browser side. Including outside dependency.
 
+###### CDN Support
+Nebpay has been released to [NPM](https://www.npmjs.com/package/nebpay.js), and developers can use the following code through [CDN](https://www.jsdelivr.com/package/npm/nebpay.js) addition.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/nebpay.js@0.2.0/nebpay.min.js"></script>
+```
 
 ## Usage
 
