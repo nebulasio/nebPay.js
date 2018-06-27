@@ -37,9 +37,16 @@ Here is an example of using NebPay in you Dapp. Please refer to `examples/exampl
             name: "example"
         },
         callback: NebPay.config.testnetUrl,   //tx result query server address
-        listener: undefined //specify a listener function for browser extension, which will handle the tx result
+        listener: listenerFunction //specify a listener function for browser extension, which will handle the tx result
     }
     serialNumber = nebPay.pay(to, value, options); //a serialNumber will be returned when calling the NebPay API, then you can query the tx result with this SerialNumber
+    
+    queryPayInfo(serialNumber, options) //options specifies the query server to query results.
+    
+    //定义listener函数作为返回信息的回调
+    function listenerFunction(serialNumber,result){
+        console.log(`the transaction result for ${serialNumber} is: ` + JSON.stringify(result))
+    }
 </script>
 ```
 
@@ -203,7 +210,8 @@ queryPayInfo(serialNumber, options)
 The return value of `queryPayInfo` is a `Promise` object. You can handle the result as follows:
 
 ```js
-nebPay.queryPayInfo(serialNumber)
+var options = {callback: NebPay.config.testnetUrl}
+nebPay.queryPayInfo(serialNumber, options)
   .then(function (resp) {
       console.log(resp);
   })
@@ -215,13 +223,16 @@ nebPay.queryPayInfo(serialNumber)
 
 #### Dealing with transaction results
 
-It is different between browser extension and wallet app when handling transaction results.
-* When using wallet App to send tx, wallet App can't return tx result back to Dapp page directly. Hence wallet App will send the tx result to a server. The Dapp side need to record the SerialNumber of a tx, and then use `queryPayInfo` to query the tx result from this server.
-* When using a browser extension to send tx, the extension can send back tx result directly, and you can just specify a  `listener` function to handle tx result. 
+When using wallet App to send tx, wallet App can't return tx result back to Dapp page directly. Hence wallet App will send the tx result to a server. The Dapp side need to record the SerialNumber of a tx, and then use `queryPayInfo` to query the tx result from this server.
+
+Browser plugins are relatively flexible, it can send messages directly to the page. 
+When using a browser extension to send tx, the extension can send back tx result directly.
+Hence except querying result with `serialNumber`, you can also just specify a  `listener(serialNumber, result)` function to handle tx result. 
 
 #### Transaction result message
 
-The tx result queried by  `queryPayInfo` is a JSON string, the format of this JSON is:
+The tx result queried by  `queryPayInfo` is a JSON string, the format of this JSON is as follows.
+You should check `code === 0`, and `data.status === 1` to make sure the transaction is packed on chain.
 ```json
 //query failed
 {
@@ -252,9 +263,12 @@ The tx result queried by  `queryPayInfo` is a JSON string, the format of this JS
 }
 ```
 
-For browser, if you specified a `listener` function, then a `txhash` will be returned, which is a JSON Object. The format of
-`txhash` are like this:
+For browser, if you specified a `listener` as callback function, then it will be called when a result is returned. The result information is as follows:
 ```json
+//transaction error, such as user rejected it
+"Error: Transaction rejected by user
+
+//transaction successfully sent
 {
     "txhash": "a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1",
     "contract_address": ""

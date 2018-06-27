@@ -37,12 +37,17 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
             name: "example"
         },
         callback: NebPay.config.testnetUrl,   //交易查询服务器地址
-        listener: undefined //为浏览器插件指定listener,处理交易返回结果
+        listener: listenerFunction //为浏览器插件指定listener,处理交易返回结果
     };
     
     serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32字节的交易序列号，Dapp端用该序列号查询交易结果
     //一般用setInterval来定时查询直到查询到结果, 查询周期建议10-15s (因为查询服务器限制最多6次/分钟, nebulas出块周期为15s.)
-    queryPayInfo(serialNumber, options) //options 指定交易查询服务器地址.
+    queryPayInfo(serialNumber, options).then() //options 指定交易查询服务器地址.
+    
+    //定义listener函数作为返回信息的回调
+    function listenerFunction(serialNumber,result){
+        console.log(`the transaction result for ${serialNumber} is: ` + JSON.stringify(result))
+    }
     
 </script>
 ```
@@ -77,7 +82,7 @@ var options = {
 	
 	// callback 是记录交易返回信息的交易查询服务器地址，
 	// 目前我们提供了主网和测试网交易查询服务器, 查询频率不能超过20次/分钟
-	//callback: NebPay.config.mainnetUrl,     //主网(默认为主网,可不写)
+	//callback: NebPay.config.mainnetUrl,     //主网
 	callback: NebPay.config.testnetUrl, //测试网
 	
 	// listener: 指定一个listener函数来处理交易返回信息（仅用于浏览器插件，App钱包不支持listener）
@@ -213,7 +218,8 @@ queryPayInfo(serialNumber,options)
  `queryPayInfo`会返回一个`Promise`对象.
  
 ```js
-nebPay.queryPayInfo(serialNumber)
+var options = {callback: NebPay.config.testnetUrl}  //指定查询服务器
+nebPay.queryPayInfo(serialNumber, options)
   .then(function (resp) {
       console.log(resp);
   })
@@ -221,20 +227,22 @@ nebPay.queryPayInfo(serialNumber)
       console.log(err);
   });
 ```
- **注意:** 我们提供的查询服务器有查询频率限制, 不得超过6次/分钟, 所以查询周期在10-15s为宜.
+ **注意:** 我们提供的查询服务器有查询频率限制, 不得超过20次/分钟, 所以查询周期在10-15s为宜.
 
 #### 交易返回信息的处理
-浏览器插件和钱包app对交易返回信息有不同的处理方式。
-* 跳转钱包APP发送交易时，钱包App无法直接返回消息给Dapp页面，所以App会将交易信息发送到一个交易查询服务器。
+跳转钱包APP发送交易时，钱包App无法直接返回消息给Dapp页面，所以App会将交易信息发送到一个交易查询服务器。
 Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号以获取交易信息.
-* 使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面，Dapp端可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以实现将交易结果发送到交易查询服务器。
+
+浏览器插件则相对灵活一些, 它可以直接发送消息给页面。使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面。
+所以除了可以通过`serialNumber`查询交易结果，Dapp端也可以指定一个`listener(serialNumber, result)`函数来接收并处理交易返回信息。
 
 ***注意:*** NebPay并不关心使用的是什么网络(主网/测试网/本地网络), 只是把交易信息发给插件或手机App, 由后者决定使用哪个网络。
 NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉钱包App将发送交易后的(serialNumber,txHash)注册到哪个服务器以供查询, 并不能决定交易发送到主网还是测试网。
 
 #### 交易返回信息
 
-`queryPayInfo` 查询到的交易返回信息为JSON字符串, 反序列化得到的js 对象。其格式为：
+`queryPayInfo` 查询到的交易返回信息为JSON字符串, 反序列化得到的js 对象。其格式为如下所示。
+Dapp页面应该判断`code === 0`, 然后判断`data.status === 1`以确保交易被打包上链。
 
 ```json
 //查询失败
@@ -266,9 +274,14 @@ NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉�
 }
 ```
 
- 对于浏览器插件，如果指定了`listener`函数，发送交易后将返回`txhash`给`listener`处理，返回的`txhash`信息是一个JSON对象，其格式为：
+ 对于浏览器插件，如果指定了`listener`函数，发送交易后如果有返回信息，则会调用`listener`来处理，返回的信息如下：
  
+ ** 注意 ** Listener函数需要有两个参数`function listener(serialNumber, result)`
 ```json
+//用户拒绝交易, 这会返回错误信息(字符串)
+"Error: Transaction rejected by user
+
+//成功发送交易，
 {
     "txhash": "a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1",
     "contract_address": ""
