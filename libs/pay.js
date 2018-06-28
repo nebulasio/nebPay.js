@@ -7,6 +7,7 @@ var QRCode = require("./qrcode");
 
 var openExtension = require("./extensionHandler");
 var openApp = require("./appHandler");
+var config = require("./config");
 
 var Pay = function (appKey, appSecret) {
 	// TODO: currently not use
@@ -15,6 +16,7 @@ var Pay = function (appKey, appSecret) {
 };
 
 Pay.prototype = {
+	/*jshint maxcomplexity:6 */
 	submit: function (currency, to, value, payload, options) {
 		options.serialNumber = Utils.randomCode(32);
 		value = value || "0";
@@ -28,7 +30,7 @@ Pay.prototype = {
 				value: amount.toString(10),
 				payload: payload
 			},
-            callback: options.callback,
+            callback: options.callback || config.payUrl(options.debug),
             listener: options.listener,
 			nrc20: options.nrc20
 		};

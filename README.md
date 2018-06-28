@@ -34,7 +34,7 @@ Here you should see a bunch of js files.
 Nebpay has been released to [NPM](https://www.npmjs.com/package/nebpay.js), and developers can use the following code through [CDN](https://www.jsdelivr.com/package/npm/nebpay.js) addition.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/nebpay.js@0.2.0/dist/nebPay.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nebpay.js@0.2.1/dist/nebPay.min.js"></script>
 ```
 
 ## Usage
@@ -55,7 +55,7 @@ Nebpay supports evoking mobile wallets, allowing users to pay via their phones. 
 ***
 *Tips*:NAS Nano also provides a test version of the wallet for the Testnet, which only supports the use of the wallet in the Testnet for developers to test.
 
-- [iOS for Testnet](itms-services://?action=download-manifest&url=https://testnet.nebulas.io/static/wallet/ios/NASnano.plist)
+- [iOS for Testnet(itms-services://?action=download-manifest&url=https://testnet.nebulas.io/static/wallet/ios/NASnano.plist)](itms-services://?action=download-manifest&url=https://testnet.nebulas.io/static/wallet/ios/NASnano.plist)
 - [Android for Testnet](https://testnet.nebulas.io/static/wallet/android/nas-nano-Testnet-v1.2.2.apk)
 
 ***
