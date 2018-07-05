@@ -15,40 +15,45 @@ var NebPay = function (appKey, appSecret) {
 
 NebPay.config = config;
 
-var defaultOptions = {
-	goods: {
-		name: "",
-		desc: "",
-		orderId: "",
-		ext: ""
-	},
-	qrcode: {
-		showQRCode: true,
-		completeTip: undefined, // string of complete payment tip
-		cancelTip: undefined, // string of cancel payment tip
-		container: undefined
-	},
-	extension: {
-		openExtension: true //set if need show extension payment mode
-	},
+var defaultOptions = function(){
+	return {
+		goods: {
+			name: "",
+			desc: "",
+			orderId: "",
+			ext: ""
+		},
+		qrcode: {
+			showQRCode: true,
+			completeTip: undefined, // string of complete payment tip
+			cancelTip: undefined, // string of cancel payment tip
+			container: undefined
+		},
+		extension: {
+			openExtension: true //set if need show extension payment mode
+		},
 
-	mobile: {
-		showInstallTip: true,
-		installTip: undefined // string of install NASNano tip
-	},
+		mobile: {
+			showInstallTip: true,
+			installTip: undefined // string of install NASNano tip
+		},
 
-	// callback is the return url after payment
-	//callback: config.payUrl,
-	callback: undefined,
+		// callback is the return url after payment
+		//callback: config.payUrl,
+		callback: undefined,
 
-	//listener：specify a listener function to handle payment feedback message(only valid for browser extension)
-	listener: undefined,
+		//listener：specify a listener function to handle payment feedback message(only valid for browser extension)
+		listener: undefined,
 
-	// if use nrc20pay ,should input nrc20 params like address, name, symbol, decimals
-	nrc20: undefined,
+		// if use nrc20pay ,should input nrc20 params like address, name, symbol, decimals
+		nrc20: undefined,
 
-	// if debug mode, should open testnet nano and reset the callback
-	debug: false
+		// if debug mode, should open testnet nano and reset the callback
+		debug: false,
+
+		gasPrice: undefined,// 1000000 ,
+		gasLimit: undefined //20000
+	};
 };
 
 NebPay.prototype = {
@@ -56,7 +61,7 @@ NebPay.prototype = {
 		var payload = {
 			type: "binary"
 		};
-		options = extend(defaultOptions, options);
+		options = extend(defaultOptions(), options);
 		return this._pay.submit(NAS, to, value, payload, options);
 	},
 	nrc20pay: function (currency, to, value, options) {
@@ -75,7 +80,7 @@ NebPay.prototype = {
 			function: "transfer",
 			args: JSON.stringify(args)
 		};
-		options = extend(defaultOptions, options);
+		options = extend(defaultOptions(), options);
 		return this._pay.submit(currency, address, "0", payload, options);
 	},
 	deploy: function (source, sourceType, args, options) {
@@ -85,7 +90,7 @@ NebPay.prototype = {
 			sourceType: sourceType,
 			args: args
 		};
-		options = extend(defaultOptions, options);
+		options = extend(defaultOptions(), options);
 		return this._pay.submit(NAS, "", "0", payload, options);
 	},
 	call: function (to, value, func, args, options) {
@@ -94,7 +99,7 @@ NebPay.prototype = {
 			function: func,
 			args: args
 		};
-		options = extend(defaultOptions, options);
+		options = extend(defaultOptions(), options);
 		return this._pay.submit(NAS, to, value, payload, options);
 	},
     simulateCall: function (to, value, func, args, options) {	//this API will not be supported in the future
@@ -103,12 +108,12 @@ NebPay.prototype = {
             function: func,
             args: args
         };
-        options = extend(defaultOptions, options);
+        options = extend(defaultOptions(), options);
 
         return this._pay.submit(NAS, to, value, payload, options);
 	},
 	queryPayInfo: function(serialNumber, options) {
-		options = extend(defaultOptions, options);
+		options = extend(defaultOptions(), options);
 		var url = options.callback || config.payUrl(options.debug);
         url = url + "/query?payId=" + serialNumber;
 		return http.get(url);

@@ -236,7 +236,7 @@ Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使�
 浏览器插件则相对灵活一些, 它可以直接发送消息给页面。使用浏览器插件发送交易时，浏览器插件可以直接返回交易结果给Dapp页面。
 所以除了可以通过`serialNumber`查询交易结果，Dapp端也可以指定一个`listener(serialNumber, result)`函数来接收并处理交易返回信息。
 
-***注意:*** NebPay并不关心使用的是什么网络(主网/测试网/本地网络), 只是把交易信息发给插件或手机App, 由后者决定使用哪个网络。
+**注意：** NebPay并不直接决定交易发送到什么网络(主网/测试网/本地网络), 只是把交易信息发给插件或手机App, 由后者决定使用哪个网络。
 NebPay 指定的 callback 是交易查询服务器地址, callback只是告诉钱包App将发送交易后的(serialNumber,txHash)注册到哪个服务器以供查询, 并不能决定交易发送到主网还是测试网。
 
 #### 交易返回信息
@@ -276,7 +276,7 @@ Dapp页面应该判断`code === 0`, 然后判断`data.status === 1`以确保交�
 
  对于浏览器插件，如果指定了`listener`函数，发送交易后如果有返回信息，则会调用`listener`来处理，返回的信息如下：
  
- ** 注意 ** Listener函数需要有两个参数`function listener(serialNumber, result)`
+ **注意：** Listener函数需要有两个参数`function listener(serialNumber, result)`
 ```json
 //用户拒绝交易, 这会返回错误信息(字符串)
 "Error: Transaction rejected by user

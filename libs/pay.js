@@ -28,7 +28,9 @@ Pay.prototype = {
 				currency: currency,
 				to: to,
 				value: amount.toString(10),
-				payload: payload
+				payload: payload,
+				gasLimit: options.gasLimit,
+				gasPrice: options.gasPrice
 			},
             callback: options.callback || config.payUrl(options.debug),
             listener: options.listener,

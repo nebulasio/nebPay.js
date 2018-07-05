@@ -263,7 +263,11 @@ You should check `code === 0`, and `data.status === 1` to make sure the transact
 }
 ```
 
-For browser, if you specified a `listener` as callback function, then it will be called when a result is returned. The result information is as follows:
+For browser, if you specified a `listener` as callback function, then it will be called when a result is returned. 
+
+ **Note** Listener function has two parameters `function listener(serialNumber, result)`
+ 
+The result information is as follows.
 ```json
 //transaction error, such as user rejected it
 "Error: Transaction rejected by user
