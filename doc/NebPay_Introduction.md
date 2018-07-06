@@ -33,6 +33,7 @@ Here is an example of using NebPay in you Dapp. Please refer to `examples/exampl
     var nebPay = new NebPay();    
     var serialNumber;
     var options = {
+        gasLimit: "200000",  //you can customize the gasLimit and gasPrice
         goods: {        //commodity description
             name: "example"
         },
@@ -58,6 +59,9 @@ Every NebPay API has a common parameter `options`. And here is a detailed introd
 
 ```js
 var options = {
+	gasLimit: "20000",  //you can customize the gasLimit and gasPrice
+	gasPrice: "1000000",
+	
 	goods: {        //Description of this commodity being  traded
 		name: "",       //name of commodity
 		desc: "",       //description

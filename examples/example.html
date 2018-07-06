@@ -20,8 +20,8 @@
                     name: "test",
                     desc: "test goods"
                 },
-                gasPrice: "1234567",// 1000000 ,
-                gasLimit: "234567", //20000
+                gasPrice: document.getElementById("gasPrice").value ,// || "1000001",// 1000000 ,
+                gasLimit: document.getElementById("gasLimit").value ,// || "20001", //20000
                 listener: listener,  //set listener for extension transaction result
                 debug: enableDebug
             });
@@ -165,6 +165,16 @@
     <div style="display: inline-block">
         <div>value:</div>
         <input type="text" id="value" placeholder="value"/>
+    </div>
+
+    <br>
+    <div style="display: inline-block">
+        <div>gas limit:</div>
+        <input type="text" id="gasLimit" placeholder="gas limit"/>
+    </div>
+    <div style="display: inline-block">
+        <div>gas price:</div>
+        <input type="text" id="gasPrice" placeholder="gas price"/>
     </div>
     <button type="button" onClick="onPayClick();">pay</button>
 </div>

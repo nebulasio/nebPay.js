@@ -33,6 +33,7 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
     var nebPay = new NebPay();    
     var serialNumber;     //交易序列号
     var options = {
+        gasLimit: "200000",  //可以自定义gasLimit和gasPrice
         goods: {        //商品描述
             name: "example"
         },
@@ -60,6 +61,9 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 
 ```js
 var options = {
+	gasLimit: "20000",  //可以自定义gasLimit和gasPrice
+	gasPrice: "1000000",
+	
 	goods: {        //Dapp端对当前交易商品的描述信息，app暂时不展示
 		name: "",       //商品名称
 		desc: "",       //描述信息
