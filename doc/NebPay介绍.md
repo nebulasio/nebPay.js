@@ -95,9 +95,9 @@ var options = {
 ```
 
 为了应对不同的应用场景，开发者可以通过配置options参数来选择使用浏览器插件或者NasNano钱包来完成支付。 这里要用到的参数是 `qrcode.showQRCode` 和 `extension.openExtension`。 
-这两个参数的效果如下:
+这两个参数的效果如下：
 * 参数`showQRCode`决定是否显示二维码信息。不论是PC端还是移动端， 当`showQRCode = true`， 页面上都会弹出二维码信息。
-* 参数`openExtension`决定是否使用浏览器插件支付。如果设置`openExtension = true`， 则会尝试通过浏览器插件来完成支付; 此时如果插件未安装， 则会通过alert提醒用户安装插件。 在移动端， `openExtension` 参数无效。
+* 参数`openExtension`决定是否使用浏览器插件支付。如果设置`openExtension = true`， 则会尝试通过浏览器插件来完成支付；此时如果插件未安装， 则会通过alert提醒用户安装插件。 在移动端， `openExtension` 参数无效。
 * 如果是在移动端发起交易， 都会尝试跳转NasNano完成支付，如果未安装NasNano则会弹出下载提醒。
 
 ***
