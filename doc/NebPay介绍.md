@@ -22,7 +22,6 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 ### 使用说明
 在开发Dapp时，如果要使用NebPay SDK来处理交易， 需要将`nebPay.js`插入到Dapp页面中， 然后就可以使用NebPay模块来发送交易了。
 
-当用户在桌面浏览器（chrome）使用Dapp，NebPay会调用浏览器插件来处理交易。当在手机端使用Dapp，NebPay会跳转到钱包app来处理交易.
 
 Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 
@@ -57,7 +56,7 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 
 ##### options
 
-每个接口都有一个共同的参数`options`，该参数的详细介绍如下:
+所有支付接口都有一个`options`参数，该参数的详细介绍如下:
 
 ```js
 var options = {
@@ -71,17 +70,13 @@ var options = {
 		ext: ""         //扩展字段
 	},
 	qrcode: {
-		showQRCode: false,      //是否显示二维码信息
+		showQRCode: false,      //是否显示二维码信息，可以使用NasNano扫码支付
 		container: undefined,    //指定显示二维码的canvas容器，不指定则生成一个默认canvas
 		completeTip: undefined, // 完成支付提示
 		cancelTip: undefined // 取消支付提示
 	},
 	extension: {
 		openExtension: true //是否支持插件调用
-	},
-	mobile: {
-		showInstallTip: true, //是否支持手机钱包安装提示
-		installTip: undefined // 手机钱包安装提示
 	},
 	
 	// callback 是记录交易返回信息的交易查询服务器地址，
@@ -99,6 +94,12 @@ var options = {
 };
 ```
 ***
+
+为了应对不同的应用场景，开发者可以通过配置options参数来选择使用浏览器插件或者NasNano钱包来完成支付。 这里要用到的参数是 `qrcode.showQRCode` 和 `extension.openExtension`。 
+这两个参数的效果如下:
+* 参数`showQRCode`决定是否显示二维码信息。不论是PC端还是移动端， 当`showQRCode = true`， 页面上都会弹出二维码信息。
+* 参数`openExtension`决定是否使用浏览器插件支付。如果设置`openExtension = true`， 则会尝试通过浏览器插件来完成支付; 此时如果插件未安装， 则会通过alert提醒用户安装插件。 在移动端， `openExtension` 参数无效。
+* 如果是在移动端发起交易， 都会尝试跳转NasNano完成支付，如果未安装NasNano则会弹出下载提醒。 
 
 ##### pay
 发起普通交易支付，指定转账地址和金额。
