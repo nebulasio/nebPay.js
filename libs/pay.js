@@ -49,14 +49,22 @@ Pay.prototype = {
 				payload: payload,
 				gasLimit: !!gasLimitBN ? gasLimitBN.toString(10) : undefined,
 				gasPrice: !!gasPriceBN ? gasPriceBN.toString(10) : undefined
-    },
+    		},
             callback: options.callback || config.payUrl(options.debug),
             listener: options.listener,
 			nrc20: options.nrc20
 		};
 
 		if (Utils.isChrome() && !Utils.isMobile() && options.extension.openExtension) {
-			openExtension(params);
+			if(Utils.isExtInstalled())
+				openExtension(params);
+			else {
+                //window.alert("NasExtWallet is not installed.");
+                if (window.confirm('NasExtWallet is not installed. Click "ok" to install it.'))
+                {
+                    window.open('https://chrome.google.com/webstore/detail/nasextwallet/gehjkhmhclgnkkhpfamakecfgakkfkco');
+                }
+            }
 		}
 
 		var appParams = {

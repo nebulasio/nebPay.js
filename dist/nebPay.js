@@ -11,6 +11,10 @@ var isChrome = function () {
     return false;
 };
 
+var isExtInstalled = function () {
+    return typeof NasExtWallet !== 'undefined';
+};
+
 var isMobile = function () {
     var userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.indexOf("mobile") > -1) {
@@ -65,6 +69,7 @@ var addCssRule = function () {
 }();
 
 module.exports = {
+    isExtInstalled: isExtInstalled,
     isChrome: isChrome,
     isMobile: isMobile,
     isNano: isNano,
@@ -87,13 +92,13 @@ function openApp(appParams, options) {
   // ifr.src = url;
   // ifr.style.display='none';
 
-  if (!Utils.isNano() && options.mobile.showInstallTip) {
-    checkOpen(function (opened) {
-      if (!opened) {
-        showNanoInstallTip(options);
-      }
-    });
-  }
+  //if (!Utils.isNano() && options.mobile.showInstallTip) {
+  checkOpen(function (opened) {
+    if (!opened) {
+      showNanoInstallTip(options);
+    }
+  });
+  //}
 
   // document.body.appendChild(ifr);      
   // setTimeout(function() {
@@ -161,7 +166,8 @@ function showNanoInstallTip(options) {
   installBtn.onclick = function () {
     body.removeChild(background);
     background = null;
-    window.location.href = "https://nano.nebulas.io/";
+    //window.location.href = "https://nano.nebulas.io/";
+    window.open("https://nano.nebulas.io/");
   };
 }
 
@@ -342,7 +348,12 @@ Pay.prototype = {
 		};
 
 		if (Utils.isChrome() && !Utils.isMobile() && options.extension.openExtension) {
-			openExtension(params);
+			if (Utils.isExtInstalled()) openExtension(params);else {
+				//window.alert("NasExtWallet is not installed.");
+				if (window.confirm('NasExtWallet is not installed. Click "ok" to install it.')) {
+					window.open('https://chrome.google.com/webstore/detail/nasextwallet/gehjkhmhclgnkkhpfamakecfgakkfkco');
+				}
+			}
 		}
 
 		var appParams = {
@@ -391,6 +402,14 @@ var createDeaultQRContainer = function (options) {
     transform: translate(-50%,-50%);";
 	Utils.addCssRule(".qrcode-container", style);
 	qrcontainer.appendChild(canvas);
+
+	var textInfo = document.createElement('div');
+	textInfo.innerHTML = 'please use <a href= "https://nano.nebulas.io/" >NasNano</a> to scan this QR-Code.';
+	textInfo.className = "qrcode-text";
+	style = "background-color: white;\
+    ";
+	Utils.addCssRule(".qrcode-text", style);
+	qrcontainer.appendChild(textInfo);
 
 	var completeBtn = document.createElement("BUTTON");
 	completeBtn.className = "complete";
@@ -6703,7 +6722,7 @@ var defaultOptions = function () {
 			ext: ""
 		},
 		qrcode: {
-			showQRCode: true,
+			showQRCode: false,
 			completeTip: undefined, // string of complete payment tip
 			cancelTip: undefined, // string of cancel payment tip
 			container: undefined
@@ -6789,6 +6808,9 @@ NebPay.prototype = {
 			args: args
 		};
 		options = extend(defaultOptions(), options);
+		options.qrcode.showQRCode = false;
+		options.mobile.showInstallTip = false;
+		options.extension.openExtension = true;
 
 		return this._pay.submit(NAS, to, value, payload, options);
 	},

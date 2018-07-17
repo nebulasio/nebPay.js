@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <script type="text/javascript" src="../dist/nebPay.min.js"></script>
+    <script type="text/javascript" src="../dist/nebPay.js"></script>
     <script type="text/javascript">
         var NebPay = require("nebpay");
         var nebPay = new NebPay();
@@ -14,7 +14,10 @@
             var value = document.getElementById("value").value;
             serialNumber = nebPay.pay(to, value, {
                 qrcode: {
-                    showQRCode: true
+                    showQRCode: document.getElementsByName("showQRCode")[0].checked
+                },
+                extension: {
+                    openExtension:  document.getElementsByName("openExtension")[0].checked //set if need show extension payment mode
                 },
                 goods: {
                     name: "test",
@@ -35,7 +38,10 @@
             var value = document.getElementById("nrc20value").value;
             serialNumber = nebPay.nrc20pay("NRC", to, value, {
                 qrcode: {
-                    showQRCode: true
+                    showQRCode: document.getElementsByName("showQRCode")[0].checked
+                },
+                extension: {
+                    openExtension:  document.getElementsByName("openExtension")[0].checked //set if need show extension payment mode
                 },
                 goods: {
                     name: "test",
@@ -47,6 +53,8 @@
                     symbol: "NRC",
                     decimals: 18
                 },
+                gasPrice: document.getElementById("gasPrice").value ,// || "1000001",// 1000000 ,
+                gasLimit: document.getElementById("gasLimit").value ,// || "20001", //20000
                 debug: enableDebug
             });
             setTimeout(() => {
@@ -59,10 +67,18 @@
             var source = document.getElementById("source").value;
             var args = document.getElementById("deployArgs").value;
             serialNumber = nebPay.deploy(source, sourceType, args, {
+                qrcode: {
+                    showQRCode: document.getElementsByName("showQRCode")[0].checked
+                },
+                extension: {
+                    openExtension:  document.getElementsByName("openExtension")[0].checked //set if need show extension payment mode
+                },
                 goods: {
                     name: "test",
                     desc: "test goods"
-                }
+                },
+                gasPrice: document.getElementById("gasPrice").value ,// || "1000001",// 1000000 ,
+                gasLimit: document.getElementById("gasLimit").value ,// || "20001", //20000
             });
             setTimeout(() => {
                 onrefreshClick();
@@ -76,12 +92,17 @@
             var callArgs = document.getElementById("callArgs").value;
             serialNumber = nebPay.call(to, value, callFunction, callArgs, {
                 qrcode: {
-                    showQRCode: true
+                    showQRCode: document.getElementsByName("showQRCode")[0].checked
+                },
+                extension: {
+                    openExtension:  document.getElementsByName("openExtension")[0].checked //set if need show extension payment mode
                 },
                 goods: {
                     name: "test",
                     desc: "test goods"
                 },
+                gasPrice: document.getElementById("gasPrice").value ,// || "1000001",// 1000000 ,
+                gasLimit: document.getElementById("gasLimit").value ,// || "20001", //20000
                 listener: listener,  //set listener for extension transaction result
                 debug: enableDebug
             });
@@ -143,17 +164,41 @@
     </style>
 </head>
 <body>
-<h1>Demo</h1>
+<h1>Demo page  for Nebpay</h1>
+<h3>Options</h3>
+<div style="padding-left:20px">
+    <div>
+        <label>Please select MainNet ot TestNet first:</label>
+        <br>
+        <div style="padding-left:20px">
+            <label><input onclick="selectMainnet();" type="radio" value="mainnetUrl" name="network">MainNet</label>
+            <label><input onclick="selectTestnet();" checked type="radio" value="testnetUrl" name="network">TestNet</label>
+            <p >Note: You need to switch the network of wallet <a target="_blank" href="https://blog.nebulas.io/2018/05/10/announcement-of-official-app/">App</a> or <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">extension</a> accordingly.</p>
+        </div>
+    </div>
 
-<div>
-    <label>Please select MainNet TeseNet to query tx result:</label>
-    <br>
-    <label><input onclick="selectMainnet();" type="radio" value="mainnetUrl" name="network">MainNet</label>
-    <label><input onclick="selectTestnet();" checked type="radio" value="testnetUrl" name="network">TestNet</label>
-    <p >Note: You need to switch the network of wallet <a target="_blank" href="https://blog.nebulas.io/2018/05/10/announcement-of-official-app/">App</a> or <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">extension</a> accordingly.</p>
+    <div>
+        <div>Other settings for <tt>options</tt>:</div>
+        <div style="padding-left:20px">
+            <div>
+                <label><input type="checkbox" value="showQRCode" name="showQRCode"/>showQRCode</label>
+                <br>
+                <label><input type="checkbox" value="openExtension" name="openExtension" checked="true"/>openExtension</label>
+
+            </div>
+            <div >
+                gas limit: <input type="text" id="gasLimit" placeholder="gas limit"/>
+            </div>
+            <div >
+                gas price: <input type="text" id="gasPrice" placeholder="gas price"/>
+            </div>
+            <br>
+        </div>
+    </div>
 </div>
-<h5></h5>
 
+<h3>Nebpay API</h3>
+<div style="padding-left:20px">
 <div>
     <div>Normal</div>
 
@@ -167,15 +212,6 @@
         <input type="text" id="value" placeholder="value"/>
     </div>
 
-    <br>
-    <div style="display: inline-block">
-        <div>gas limit:</div>
-        <input type="text" id="gasLimit" placeholder="gas limit"/>
-    </div>
-    <div style="display: inline-block">
-        <div>gas price:</div>
-        <input type="text" id="gasPrice" placeholder="gas price"/>
-    </div>
     <button type="button" onClick="onPayClick();">pay</button>
 </div>
 
@@ -263,6 +299,6 @@
     <div>pay result listened directly from extension:</div>
     <textarea id="resultFromExtension" readonly="readonly"></textarea>
 </div>
-
+</div>
 </body>
 </html>

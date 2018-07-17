@@ -11,13 +11,13 @@ function openApp(appParams, options) {
     // ifr.src = url;
     // ifr.style.display='none';
 
-    if (!Utils.isNano() && options.mobile.showInstallTip) {
+    //if (!Utils.isNano() && options.mobile.showInstallTip) {
         checkOpen(function(opened) {
             if (!opened) {
                 showNanoInstallTip(options);
             }
         });
-    }
+    //}
 
     // document.body.appendChild(ifr);      
     // setTimeout(function() {
@@ -84,7 +84,8 @@ function showNanoInstallTip(options) {
     installBtn.onclick = function () {
 		body.removeChild(background);
         background = null;
-        window.location.href = "https://nano.nebulas.io/";
+        //window.location.href = "https://nano.nebulas.io/";
+        window.open("https://nano.nebulas.io/");
 	};
 }
 

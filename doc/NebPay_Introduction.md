@@ -55,7 +55,7 @@ Here is an example of using NebPay in you Dapp. Please refer to `examples/exampl
 
 ##### options
 
-Every NebPay API has a common parameter `options`. And here is a detailed introduction of it.
+NebPay payment APIs has a common parameter `options`. And here is a detailed introduction of it.
 
 ```js
 var options = {
@@ -97,6 +97,14 @@ var options = {
 	debug: false
 };
 ```
+In order to deal with different application scenarios, developers can choose to use the browser plugin or NasNano wallet to complete the payment by configuring the `options` parameter. 
+
+The parameters to be used here are `qrcode.showQRCode` and `extension.openExtension`.
+The effect of these two parameters is as follows:
+* The parameter `showQRCode` determines whether to display the QR code information. Whether it is PC or mobile, when `showQRCode = true`, the QR code information will pop up on the page.
+* The parameter `openExtension` determines whether to open the browser plugin. If `openExtension = true`, NebPay will try to complete the transaction through the browser plugin. And if the plugin is not installed, an alert info will be prompted to tell the user to install the plugin. On the mobile side, the `openExtension` parameter is neglected.
+* If NebPay is used on the mobile side, it will try to jump to NasNano to complete the payment. If NasNano is not installed, a download reminder will appear.
+
 ***
 
 ##### pay

@@ -24,6 +24,14 @@ var createDeaultQRContainer = function(options) {
 	Utils.addCssRule(".qrcode-container", style);
 	qrcontainer.appendChild(canvas);
 
+    var textInfo = document.createElement('div');
+    textInfo.innerHTML = 'please use <a href= "https://nano.nebulas.io/" >NasNano</a> to scan this QR-Code.';
+    textInfo.className = "qrcode-text";
+    style = "background-color: white;\
+    ";
+    Utils.addCssRule(".qrcode-text", style);
+    qrcontainer.appendChild(textInfo);
+
 	var completeBtn = document.createElement("BUTTON");
 	completeBtn.className = "complete";
 	completeBtn.innerHTML =  options.qrcode.completeTip || "COMPLETE/完成支付";

@@ -10,6 +10,10 @@ var isChrome = function() {
     return false;
 };
 
+var isExtInstalled = function() {
+    return (typeof(NasExtWallet) !== 'undefined');
+};
+
 var isMobile = function() {
     var userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.indexOf("mobile") > -1)  {
@@ -64,6 +68,7 @@ var addCssRule = function() {
 }();
 
 module.exports = {
+    isExtInstalled: isExtInstalled,
     isChrome: isChrome,
     isMobile: isMobile,
     isNano: isNano,

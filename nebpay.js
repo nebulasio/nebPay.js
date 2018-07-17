@@ -24,7 +24,7 @@ var defaultOptions = function(){
 			ext: ""
 		},
 		qrcode: {
-			showQRCode: true,
+			showQRCode: false,
 			completeTip: undefined, // string of complete payment tip
 			cancelTip: undefined, // string of cancel payment tip
 			container: undefined
@@ -109,6 +109,9 @@ NebPay.prototype = {
             args: args
         };
         options = extend(defaultOptions(), options);
+        options.qrcode.showQRCode = false;
+        options.mobile.showInstallTip = false;
+        options.extension.openExtension = true;
 
         return this._pay.submit(NAS, to, value, payload, options);
 	},
