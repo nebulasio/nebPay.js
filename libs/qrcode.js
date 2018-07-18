@@ -7,16 +7,17 @@ var createDeaultQRContainer = function(options) {
 	var canvas = document.createElement("canvas");
 	canvas.className = "qrcode";
 	/*jshint multistr: true */
-	var canvasStyle = "box-shadow: 2px 2px 12px lightgray;";
+	var canvasStyle = "//box-shadow: 2px 2px 12px lightgray;";
 	Utils.addCssRule(".qrcode", canvasStyle);
 
 	var qrcontainer = document.createElement("div");
 	qrcontainer.className = "qrcode-container";
 	var style = ("text-align: center;\
-    background-color: #fff0;\
-    border-radius: 20px;\
-    width: 300px;\
-    height: 300px;\
+    //background-color: #fff0;\
+    background-color: white;\
+    //border-radius: 20px;\
+    width: min-content; //300px;\
+    height: min-content; //300px;\
     position: absolute;\
     left: 50%;\
     top: 50%;\
@@ -25,10 +26,10 @@ var createDeaultQRContainer = function(options) {
 	qrcontainer.appendChild(canvas);
 
     var textInfo = document.createElement('div');
-    textInfo.innerHTML = 'please use <a href= "https://nano.nebulas.io/" >NasNano</a> to scan this QR-Code.';
+    textInfo.innerHTML = 'Please use <a href= "https://nano.nebulas.io/" >NasNano</a> to scan this QR-Code.';
     textInfo.className = "qrcode-text";
     style = "background-color: white;\
-    ";
+    	width: 300px";
     Utils.addCssRule(".qrcode-text", style);
     qrcontainer.appendChild(textInfo);
 
@@ -37,7 +38,7 @@ var createDeaultQRContainer = function(options) {
 	completeBtn.innerHTML =  options.qrcode.completeTip || "COMPLETE/完成支付";
 	style = "background-color: #000;\
 	border-radius: 4px;\
-	width: 300px;\
+	width: 295px; // 300px;\
 	height: 40px;\
 	// padding: 20px;\
 	margin-top: 20px;\
@@ -51,7 +52,7 @@ var createDeaultQRContainer = function(options) {
 	cancelBtn.innerHTML = options.qrcode.cancelTip || "CANCEL/取消支付";
 	style = "background-color: #666;\
 	border-radius: 4px;\
-	width: 300px;\
+	width: 295px; // 300px;\
 	height: 40px;\
 	// padding: 20px;\
 	margin-top: 10px;\
