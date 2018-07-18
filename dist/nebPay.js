@@ -95,7 +95,8 @@ function openApp(appParams, options) {
   //if (!Utils.isNano() && options.mobile.showInstallTip) {
   checkOpen(function (opened) {
     if (!opened) {
-      showNanoInstallTip(options);
+      //showNanoInstallTip(options);
+      alertNanoInstall();
     }
   });
   //}
@@ -104,6 +105,13 @@ function openApp(appParams, options) {
   // setTimeout(function() {
   //     document.body.removeChild(ifr);
   // }, 2000); 
+}
+
+function alertNanoInstall() {
+  if (window.confirm('NasNano is not installed. Click "ok" to install it.')) {
+    //window.open("https://nano.nebulas.io/");  //usually pop-up window is blocked
+    window.location.href = 'https://nano.nebulas.io/';
+  }
 }
 
 //check app open
@@ -404,13 +412,19 @@ var createDeaultQRContainer = function (options) {
 	Utils.addCssRule(".qrcode-container", style);
 	qrcontainer.appendChild(canvas);
 
-	var textInfo = document.createElement('div');
-	textInfo.innerHTML = 'please use <a href= "https://nano.nebulas.io/" >NasNano</a> to scan this QR-Code.';
+	var newLine = document.createElement('br');
+	qrcontainer.appendChild(newLine);
+
+	var textInfo = document.createElement('label');
+	textInfo.innerHTML = 'Please use <a href= "https://nano.nebulas.io/" target="_blank" >NasNano</a> to scan this QR-Code.';
 	textInfo.className = "qrcode-text";
 	style = "background-color: white;\
     	width: 300px";
 	Utils.addCssRule(".qrcode-text", style);
 	qrcontainer.appendChild(textInfo);
+
+	newLine = document.createElement('br');
+	qrcontainer.appendChild(newLine);
 
 	var completeBtn = document.createElement("BUTTON");
 	completeBtn.className = "complete";
@@ -425,6 +439,9 @@ var createDeaultQRContainer = function (options) {
 	";
 	Utils.addCssRule(".complete", style);
 	qrcontainer.appendChild(completeBtn);
+
+	newLine = document.createElement('br');
+	qrcontainer.appendChild(newLine);
 
 	var cancelBtn = document.createElement("BUTTON");
 	cancelBtn.className = "cancel";
@@ -457,6 +474,10 @@ var createDeaultQRContainer = function (options) {
 	var body = bodys[0];
 	body.appendChild(background);
 
+	qrcontainer.onclick = function () {
+		//if clicked on qr-container, qr-code should not be removed
+		event.cancelBubble = true;
+	};
 	background.onclick = function () {
 		if (background !== null) {
 			body.removeChild(background);

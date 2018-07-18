@@ -14,7 +14,8 @@ function openApp(appParams, options) {
     //if (!Utils.isNano() && options.mobile.showInstallTip) {
         checkOpen(function(opened) {
             if (!opened) {
-                showNanoInstallTip(options);
+                //showNanoInstallTip(options);
+				alertNanoInstall();
             }
         });
     //}
@@ -23,6 +24,14 @@ function openApp(appParams, options) {
     // setTimeout(function() {
     //     document.body.removeChild(ifr);
     // }, 2000); 
+}
+
+function alertNanoInstall(){
+    if (window.confirm('NasNano is not installed. Click "ok" to install it.'))
+    {
+        //window.open("https://nano.nebulas.io/");  //usually pop-up window is blocked
+        window.location.href='https://nano.nebulas.io/';
+    }
 }
 
 //check app open

@@ -190,7 +190,7 @@
                 gas limit: <input type="text" id="gasLimit" placeholder="gas limit"/>
             </div>
             <div >
-                gas price: <input type="text" id="gasPrice" placeholder="gas price"/>
+                gas price: <input type="text" id="gasPrice" placeholder="gas price"/>  (wei)
             </div>
             <br>
         </div>
@@ -208,7 +208,7 @@
     </div>
 
     <div style="display: inline-block">
-        <div>value:</div>
+        <div>value(nas):</div>
         <input type="text" id="value" placeholder="value"/>
     </div>
 
@@ -232,7 +232,7 @@
     </div>
 
     <div style="display: inline-block">
-        <div>value:</div>
+        <div>value(nas):</div>
         <input type="text" id="nrc20value" placeholder="value"/>
     </div>
     <button type="button" onClick="onNrc20PayClick();">pay</button>
@@ -249,7 +249,7 @@
     </div>
 
     <div style="display: inline-block">
-        <div>value:</div>
+        <div>value(nas):</div>
         <input type="text" id="callValue" placeholder="value"/>
     </div>
     <div style="display: inline-block">
@@ -258,7 +258,7 @@
     </div>
     <div style="display: inline-block">
         <div>args:</div>
-        <input type="text" id="callArgs" placeholder="call args"/>
+        <input type="text" id="callArgs" placeholder='["arg1","arg2"]'/>
     </div>
     <button type="button" onClick="onCallClick();">pay</button>
 </div>
@@ -274,7 +274,7 @@
     </div>
 
     <div style="display: inline-block">
-        <div>value:</div>
+        <div>value(nas):</div>
         <input type="text" id="simulateCallValue" placeholder="value"/>
     </div>
     <div style="display: inline-block">
@@ -283,7 +283,7 @@
     </div>
     <div style="display: inline-block">
         <div>args:</div>
-        <input type="text" id="simulateCallArgs" placeholder="call args"/>
+        <input type="text" id="simulateCallArgs" placeholder='["arg1","arg2"]'/>
     </div>
     <button type="button" onClick="onSimulateCallClick();">pay</button>
 </div>
