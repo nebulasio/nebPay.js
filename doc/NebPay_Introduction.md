@@ -231,7 +231,7 @@ nebPay.queryPayInfo(serialNumber, options)
       console.log(err);
   });
 ```
- **Note:** The query server we provided has limitations on the query frequency, which is 6 times per minute. We suggest that you should set the query period to 10~15s.
+ **Note:** The query server we provided has limitations on the query frequency, which is 20 times per minute. We suggest that you should set the query period to 5~10s.
 
 #### Dealing with transaction results
 
