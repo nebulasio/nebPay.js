@@ -479,10 +479,10 @@ var createDeaultQRContainer = function (options) {
 		event.cancelBubble = true;
 	};
 	background.onclick = function () {
-		if (background !== null) {
-			body.removeChild(background);
-			dismiss(false, options);
-		}
+		// if (background !== null) {
+		// 	body.removeChild(background);
+		// 	dismiss(false, options);
+		// }
 	};
 	cancelBtn.onclick = function () {
 		body.removeChild(background);

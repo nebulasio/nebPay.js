@@ -88,13 +88,13 @@ var createDeaultQRContainer = function(options) {
 	body.appendChild(background);
 
     qrcontainer.onclick = function(){	//if clicked on qr-container, qr-code should not be removed
-        event.cancelBubble = true
+        event.cancelBubble = true;
     };
 	background.onclick = function () {
-		if (background !== null) {
-			body.removeChild(background);
-			dismiss(false, options);
-		}
+		// if (background !== null) {   //change: qrcode should be cancelled when click background
+		// 	body.removeChild(background);
+		// 	dismiss(false, options);
+		// }
 	};
 	cancelBtn.onclick = function () {
 		body.removeChild(background);
