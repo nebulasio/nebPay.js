@@ -34,9 +34,10 @@
         }
 
         function onNrc20PayClick() {
+            var currency = document.getElementById("currency").value;
             var to = document.getElementById("nrc20to").value;
             var value = document.getElementById("nrc20value").value;
-            serialNumber = nebPay.nrc20pay("NRC", to, value, {
+            serialNumber = nebPay.nrc20pay(currency, to, value, {
                 qrcode: {
                     showQRCode: document.getElementsByName("showQRCode")[0].checked
                 },
