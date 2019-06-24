@@ -7,13 +7,13 @@ NebPay SDK provides a unified payment interface for transactions on different pl
 
 The APIs provided by NebPay SDK are as flows：
  
-API | Introduction 
-:--- | :---
-[pay](#pay) | Ordinary transactions between users
-[nrc20pay](#nrc20pay)|NRC20 token transactions
-[deploy](#deploy)|Deploy a smart contract
-[call](#call)|Call a smart contract function
-[queryPayInfo](#querypayinfo)|query a transaction result
+| API                           | Introduction                        |
+| :---------------------------- | :---------------------------------- |
+| [pay](#pay)                   | Ordinary transactions between users |
+| [nrc20pay](#nrc20pay)         | NRC20 token transactions            |
+| [deploy](#deploy)             | Deploy a smart contract             |
+| [call](#call)                 | Call a smart contract function      |
+| [queryPayInfo](#querypayinfo) | query a transaction result          |
 
 The first four APIs above are correspond to [SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction) API, and just refined the usage scenario of `SendTransaction`.
 simulateCall is correspond to [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call) API, which is only used for interactions with browser extension, and is not supported by mobile wallet App.
@@ -59,8 +59,8 @@ NebPay payment APIs has a common parameter `options`. And here is a detailed int
 
 ```js
 var options = {
-	gasLimit: "20000",  //you can customize the gasLimit and gasPrice
-	gasPrice: "1000000",
+	gasLimit: "2000000",  //you can customize the gasLimit and gasPrice
+	gasPrice: "20000000000",
 	
 	goods: {        //Description of this commodity being  traded
 		name: "",       //name of commodity

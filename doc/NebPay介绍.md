@@ -8,13 +8,13 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 
 目前NebPay 提供了以下接口：
  
-接口 | 简介 
-:--- | :---
-[pay](#pay)| 用于账户间的NAS转账
-[nrc20pay](#nrc20pay)|用于NRC20代币的转账，仅接口实现，app不支持
-[deploy](#deploy)|用于部署智能合约，仅接口实现
-[call](#call)|用于调用智能合约
-[queryPayInfo](#querypayinfo)|用于查询支付结果
+| 接口                          | 简介                                       |
+| :---------------------------- | :----------------------------------------- |
+| [pay](#pay)                   | 用于账户间的NAS转账                        |
+| [nrc20pay](#nrc20pay)         | 用于NRC20代币的转账，仅接口实现，app不支持 |
+| [deploy](#deploy)             | 用于部署智能合约，仅接口实现               |
+| [call](#call)                 | 用于调用智能合约                           |
+| [queryPayInfo](#querypayinfo) | 用于查询支付结果                           |
 
 以上接口中，前四个api对应于[SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction)接口，细化了`SendTransaction`的使用场景。simulateCall 对应于RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call)接口，只用于和浏览器扩展的交互，移动端钱包app不支持该接口。
 
@@ -60,8 +60,8 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 
 ```js
 var options = {
-	gasLimit: "20000",  //可以自定义gasLimit和gasPrice
-	gasPrice: "1000000",
+	gasLimit: "2000000",  //可以自定义gasLimit和gasPrice
+	gasPrice: "20000000000",
 	
 	goods: {        //Dapp端对当前交易商品的描述信息，app暂时不展示
 		name: "",       //商品名称
