@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
 'use strict';
-
 var version = require('./libs/version.json');
 var path = require('path');
 
 var del = require('del');
-var gulp = require('gulp');
+const { src, dest, watch, series } = require('gulp');
 var browserify = require('browserify');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
@@ -14,8 +13,8 @@ var rename = require('gulp-rename');
 var plumber = require('gulp-plumber');
 var notify  = require('gulp-notify');
 var source = require('vinyl-source-stream');
-var exorcist = require('exorcist');
-var streamify = require('gulp-streamify');
+// var exorcist = require('exorcist');
+// var streamify = require('gulp-streamify');
 var replace = require('gulp-replace');
 var babelify     = require('babelify');
 var buffer       = require('vinyl-buffer');
@@ -57,23 +56,23 @@ var browserifyOptions = {
     bundleExternal: true
 };
 
-gulp.task('version', function(){
-  gulp.src(['./package.json'])
+function gversion(){
+    return src(['./package.json'])
     .pipe(replace(/\"version\"\: \"([\.0-9]*)\"/, '"version": "'+ version.version + '"'))
-    .pipe(gulp.dest('./'));
-});
+    .pipe(dest('./'));
+}
 
-gulp.task('lint', [], function(){
-    return gulp.src(['./nebpay.js', './libs/*.js'])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
-});
+function lint(){
+    return src(['./nebpay.js', './libs/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+}
 
-gulp.task('clean', ['lint'], function(cb) {
+function clean(cb) {
     del([ DEST ]).then(cb.bind(null, null));
-});
+}
 
-gulp.task('nebpay', ['clean'], function () {
+function nebpay() {
     return browserify()
         .require('./nebpay.js', {expose: 'nebpay'})
         .transform(babelify)
@@ -83,34 +82,15 @@ gulp.task('nebpay', ['clean'], function () {
         .pipe(source('nebPay.js'))
         .pipe(buffer())
         .pipe(rename(dst + '.js'))
-        .pipe(gulp.dest(DEST))
+        .pipe(dest(DEST))
         .pipe(uglify())
         .pipe(rename(dst + '.min.js'))
-        .pipe(gulp.dest(DEST));
-});
+        .pipe(dest(DEST));
+}
 
-gulp.task('watch', function() {
-    gulp.watch(['./libs/*.js'], ['lint', 'build']);
-});
+function gwatch() {
+    watch(['./libs/*.js'], ['lint', 'build']);
+}
 
-gulp.task('documentation', function(cb) {
-
-    gulp.src(['README.md', './libs/*.js'])
-        .pipe(jsdoc({
-            opts: {
-                destination: documentationDst,
-                "template": "./docs-data/template"
-            },
-            templates: {
-                "systemName"            : pkg.description,
-                "logoFile"              : "img/logo.png",
-                "copyright"             :  pkg.copyright,
-                "theme"                 : "lumen",
-                "linenums"              : true,
-                "sort"				    : false,
-            }
-        }, cb))
-});
-
-gulp.task('default', ['version', 'lint', 'clean', 'nebpay']);
-
+exports.watch = gwatch
+exports.default = series(gversion, lint, clean, nebpay)
