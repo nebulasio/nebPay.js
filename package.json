@@ -1,6 +1,6 @@
 {
   "name": "nebpay.js",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "copyright": "Copyright © 2017-2020 Nebulas.io",
   "description": "Nebulas JavaScript PAY SDK",
   "main": "nebpay.js",
