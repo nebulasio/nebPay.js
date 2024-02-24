@@ -1,9 +1,13 @@
 {
   "name": "nebpay.js",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "copyright": "Copyright © 2017-2020 Nebulas.io",
   "description": "Nebulas JavaScript PAY SDK",
   "main": "nebpay.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nebulasio/nebPay.js"
+  },
   "scripts": {
     "npm-build": "parcel build ./nebpay.js",
     "build": "gulp",
@@ -23,6 +27,11 @@
     "lib": "./libs"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bs58": "^4.0.1",
+    "uuid": "^3.0.1",
+    "promise": "^8.0.1",
+    "ripemd160": "^2.0.1",
     "qrcode": "^1.4.4",
     "extend": ">=3.0.2",
     "bignumber.js": "^5.0.0"
